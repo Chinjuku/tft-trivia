@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rng > known values stay stable across releases 1`] = `
+[
+  52,
+  18,
+  59,
+]
+`;

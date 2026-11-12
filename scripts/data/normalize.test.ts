@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, test } from 'vitest'
 import {
   assetUrl,
+  isEquipment,
   cleanText,
   iconSetMarker,
   isLocalizedName,
@@ -15,6 +16,14 @@ import {
 const fx = (name: string) => JSON.parse(readFileSync(join(__dirname, '__fixtures__', name), 'utf8')) as RawFile
 
 describe('helpers', () => {
+  test('isEquipment drops shop and mechanic entries', () => {
+    expect(isEquipment({ apiName: 'TFT_Item_GrantOrnnAnvil', name: 'Artifact Anvil' })).toBe(false)
+    expect(isEquipment({ apiName: 'TFT12_Zap_PhantomArtifact', name: 'Phantom Artifact' })).toBe(false)
+    expect(isEquipment({ apiName: 'x', name: '2 Radiant Items' })).toBe(false)
+    expect(isEquipment({ apiName: 'TFT17_ChampionItem_Chosen_Ornn', name: '3-cost: Ornn' })).toBe(false)
+    expect(isEquipment({ apiName: 'TFT4_Item_OrnnZhonyasParadox', name: "Zhonya's Paradox" })).toBe(true)
+    expect(isEquipment({ apiName: 'TFT10_Item_8bitEmblem', name: '8-bit Emblem' })).toBe(true)
+  })
   test('slug', () => {
     expect(slug("Kai'Sa")).toBe('kaisa')
     expect(slug('Jarvan IV')).toBe('jarvaniv')

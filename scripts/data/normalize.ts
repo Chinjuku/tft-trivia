@@ -157,9 +157,18 @@ function itemStats(effects: RawItem['effects']): string[] {
   return [...out].sort()
 }
 
+/** Shop/market/mechanic entries that live in the item list but are not equipment. */
+const NON_EQUIPMENT_API = /Zap_|MarketOffering|Assist_|Grant|Anvil|Artifactinate|ChampionItem|Phantom|Radiantize|Conjure|DelayedRandom|Consumable|Remover|Reforger|Duplicator|Lockbox|Tome/i
+const NON_EQUIPMENT_NAME = /^\d+ |:|\bitems?$|anvil|radiantize|conjure|phantom/i
+
+export function isEquipment(it: { apiName?: string; name: string }): boolean {
+  return !NON_EQUIPMENT_API.test(it.apiName ?? '') && !NON_EQUIPMENT_NAME.test(it.name)
+}
+
 function classifyItem(it: RawItem, recipe: string[] | undefined, componentKeys: Set<string>): ItemKind {
   const api = it.apiName ?? ''
   const nm = slug(it.name)
+  if (!isEquipment(it)) return 'other'
   if (/radiant/i.test(api) || /^radiant/.test(nm)) return 'radiant'
   if (/emblem/i.test(api) || /emblem$/.test(nm)) return 'emblem'
   if (/artifact|ornn/i.test(api)) return 'artifact'

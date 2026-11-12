@@ -1,6 +1,6 @@
 {
  "dataVersion": 1,
- "contentHash": "46e4e074e93fade8",
+ "contentHash": "23f209f0b5e56209",
  "sets": [
   {
    "id": "1",
@@ -10,7 +10,7 @@
    "status": "verified",
    "counts": {
     "champions": 57,
-    "items": 54,
+    "items": 53,
     "traits": 24
    }
   },
@@ -154,7 +154,7 @@
    "status": "verified",
    "counts": {
     "champions": 59,
-    "items": 69,
+    "items": 67,
     "traits": 27
    }
   },
@@ -166,7 +166,7 @@
    "status": "verified",
    "counts": {
     "champions": 59,
-    "items": 116,
+    "items": 114,
     "traits": 28
    }
   },
@@ -202,7 +202,7 @@
    "status": "verified",
    "counts": {
     "champions": 59,
-    "items": 122,
+    "items": 121,
     "traits": 29
    }
   },
@@ -226,7 +226,7 @@
    "status": "verified",
    "counts": {
     "champions": 60,
-    "items": 150,
+    "items": 144,
     "traits": 27
    }
   },
@@ -250,7 +250,7 @@
    "status": "verified",
    "counts": {
     "champions": 60,
-    "items": 156,
+    "items": 149,
     "traits": 25
    }
   },
@@ -262,7 +262,7 @@
    "status": "verified",
    "counts": {
     "champions": 64,
-    "items": 152,
+    "items": 144,
     "traits": 26
    }
   },
@@ -274,7 +274,7 @@
    "status": "verified",
    "counts": {
     "champions": 100,
-    "items": 165,
+    "items": 157,
     "traits": 48
    }
   },
@@ -286,7 +286,7 @@
    "status": "verified",
    "counts": {
     "champions": 63,
-    "items": 182,
+    "items": 171,
     "traits": 36
    }
   },
@@ -298,7 +298,7 @@
    "status": "verified",
    "counts": {
     "champions": 65,
-    "items": 172,
+    "items": 162,
     "traits": 35
    }
   }

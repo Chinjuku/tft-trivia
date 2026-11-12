@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateQuiz > snapshot of a fixed quiz (changing this breaks old challenge links) 1`] = `
+[
+  [
+    "1",
+    "Kayle",
+    [
+      "Miss Fortune",
+      "Kayle",
+      "Kai'Sa",
+      "Karthus",
+    ],
+  ],
+  [
+    "1",
+    "Braum",
+    [
+      "Pyke",
+      "Lulu",
+      "Varus",
+      "Braum",
+    ],
+  ],
+  [
+    "1",
+    "Kai'Sa",
+    [
+      "Kai'Sa",
+      "Anivia",
+      "Pantheon",
+      "Swain",
+    ],
+  ],
+]
+`;
