@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { matchesAnswer } from '../../engine/answer'
-import type { Question } from '../../engine/quiz'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { matchesAnswer, normalizeAnswer } from '../../engine/answer'
+import type { Question, QuizMode } from '../../engine/quiz'
 import { QUESTION_TIME_MS, questionScore } from '../../engine/score'
 import { Button } from '../../ui/kit'
 import { Prompt } from './Prompt'
@@ -11,16 +11,36 @@ export interface AnswerRecord {
   correct: boolean
   ms: number
   points: number
+  /** player pressed "give up" on this question */
+  skipped?: boolean
+}
+
+/** Typed-answer suggestions: names of every subject of that mode in the chosen sets (never hints which one is right). */
+export type NameOptions = Partial<Record<QuizMode, string[]>>
+
+function suggest(names: string[], query: string, limit = 8): string[] {
+  const q = normalizeAnswer(query)
+  if (!q) return []
+  const starts: string[] = []
+  const contains: string[] = []
+  for (const n of names) {
+    const k = normalizeAnswer(n)
+    if (k.startsWith(q)) starts.push(n)
+    else if (k.includes(q)) contains.push(n)
+  }
+  return [...starts, ...contains].slice(0, limit)
 }
 
 export function QuizRunner({
   questions,
   header,
   onDone,
+  nameOptions = {},
 }: {
   questions: Question[]
   header: string
   onDone: (answers: AnswerRecord[]) => void
+  nameOptions?: NameOptions
 }) {
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<AnswerRecord[]>([])
@@ -31,18 +51,23 @@ export function QuizRunner({
   const [now, setNow] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
+  const [hi, setHi] = useState(-1)
 
   const q = questions[index]
+  const suggestions = useMemo(
+    () => (q?.style === 'typing' ? suggest(nameOptions[q.mode] ?? [], typed) : []),
+    [q, nameOptions, typed],
+  )
   const elapsed = startedAt ? now - startedAt : 0
   const remaining = Math.max(0, QUESTION_TIME_MS - elapsed)
   const total = answers.reduce((s, a) => s + a.points, 0)
 
   const submit = useCallback(
-    (given: string | null) => {
+    (given: string | null, skipped = false) => {
       if (revealed) return
       const ms = performance.now() - startedAt
-      const correct = given != null && (q.style === 'choice' ? given === q.answer : matchesAnswer(given, q.answer))
-      const rec = { given, correct, ms, points: questionScore(correct, ms) }
+      const correct = !skipped && given != null && (q.style === 'choice' ? given === q.answer : matchesAnswer(given, q.answer))
+      const rec: AnswerRecord = { given, correct, ms, points: questionScore(correct, ms), ...(skipped ? { skipped } : {}) }
       setRevealed(rec)
       setAnswers((a) => [...a, rec])
     },
@@ -78,6 +103,7 @@ export function QuizRunner({
     setIndex(index + 1)
     setRevealed(null)
     setTyped('')
+    setHi(-1)
   }
 
   if (!q) return null
@@ -131,15 +157,32 @@ export function QuizRunner({
         <form
           onSubmit={(e) => {
             e.preventDefault()
-            if (typed.trim()) submit(typed)
+            const pick = hi >= 0 ? suggestions[hi] : undefined
+            if (pick) submit(pick)
+            else if (typed.trim()) submit(typed)
           }}
-          className="flex gap-2"
+          className="relative flex gap-2"
         >
           <input
             ref={inputRef}
             value={typed}
             disabled={!!revealed}
-            onChange={(e) => setTyped(e.target.value)}
+            onChange={(e) => {
+              setTyped(e.target.value)
+              setHi(-1)
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown' && suggestions.length) {
+                e.preventDefault()
+                setHi((h) => Math.min(h + 1, suggestions.length - 1))
+              } else if (e.key === 'ArrowUp' && suggestions.length) {
+                e.preventDefault()
+                setHi((h) => Math.max(h - 1, -1))
+              }
+            }}
+            role="combobox"
+            aria-expanded={!revealed && suggestions.length > 0}
+            aria-controls="quiz-suggestions"
             placeholder="พิมพ์ชื่อแล้วกด Enter"
             autoComplete="off"
             autoCapitalize="off"
@@ -151,7 +194,31 @@ export function QuizRunner({
           <Button type="submit" disabled={!!revealed || !typed.trim()}>
             ตอบ
           </Button>
+          {!revealed && suggestions.length > 0 && (
+            <ul id="quiz-suggestions" role="listbox" className="absolute left-0 right-20 top-full z-10 mt-1 overflow-hidden rounded-lg border border-line bg-card shadow-xl">
+              {suggestions.map((n, i) => (
+                <li key={n} role="option" aria-selected={i === hi}>
+                  <button
+                    type="button"
+                    onMouseEnter={() => setHi(i)}
+                    onClick={() => submit(n)}
+                    className={`w-full px-3 py-1.5 text-left text-sm ${i === hi ? 'bg-gold-dim' : ''}`}
+                  >
+                    {n}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </form>
+      )}
+
+      {!revealed && (
+        <div className="flex justify-end">
+          <button type="button" className="text-xs text-muted underline hover:text-text" onClick={() => submit(null, true)}>
+            ยอมแพ้ข้อนี้
+          </button>
+        </div>
       )}
 
       {revealed && (
@@ -161,7 +228,7 @@ export function QuizRunner({
               <span className="text-ok brightness-150">ถูกต้อง! +{revealed.points}</span>
             ) : (
               <span>
-                <span className="text-no brightness-150">{revealed.given == null ? 'หมดเวลา' : 'ผิด'}</span>
+                <span className="text-no brightness-150">{revealed.skipped ? 'ยอมแพ้' : revealed.given == null ? 'หมดเวลา' : 'ผิด'}</span>
                 <span className="text-muted"> · คำตอบ: </span>
                 <b>{q.answer}</b>
               </span>

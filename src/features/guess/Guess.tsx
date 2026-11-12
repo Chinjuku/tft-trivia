@@ -23,7 +23,7 @@ import { dailyGuessShare } from '../../engine/score'
 import { getDailyGuess, recordBest, saveDailyGuess } from '../../lib/storage'
 import { Img } from '../../ui/Img'
 import { COLUMN_LABEL, GUESS_LABEL } from '../../ui/labels'
-import { Button, Card, Chip, ErrorBox, Loading } from '../../ui/kit'
+import { BackButton, Button, Card, Chip, ErrorBox, Loading } from '../../ui/kit'
 import { useAsync } from '../../ui/useAsync'
 import { VersusCard } from '../quiz/Result'
 import { guessPath, parseGuess, type GuessParams } from '../routes'
@@ -74,6 +74,7 @@ function GuessSetup({ params }: { params: GuessParams }) {
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
+      <BackButton />
       <h1 className="text-xl font-bold">ทายปริศนา</h1>
       <Card>
         <div className="mb-2 text-sm text-muted">ทายอะไร</div>
@@ -262,6 +263,17 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
 
   return (
     <div className="mx-auto flex w-full flex-col items-center gap-4">
+      <div className="w-full max-w-3xl">
+        {p.daily ? (
+          <BackButton confirmMessage={over || !guesses.length ? undefined : 'ออกจากรอบนี้?'} />
+        ) : (
+          <BackButton
+            to={guessPath({ kind: p.kind, setIds: p.kind === 'item' ? [] : p.setIds })}
+            label="เลือกใหม่"
+            confirmMessage={over || !guesses.length ? undefined : 'ออกจากรอบนี้?'}
+          />
+        )}
+      </div>
       <div className="flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 text-sm">
         <span className="rounded-md border border-gold/40 px-2 py-0.5 text-gold">{title}</span>
         <span className="text-muted">

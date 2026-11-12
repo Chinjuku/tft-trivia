@@ -78,7 +78,7 @@ export function Result({
           <ul className="flex flex-col gap-1 text-sm">
             {missed.map(({ q, a, i }) => (
               <li key={i}>
-                {i + 1} · {q.mode === 'set' && 'name' in q.prompt ? `${q.prompt.name} → ` : ''}<b>{q.answer}</b> <span className="text-muted">(Set {q.setId} · {a?.given == null ? 'หมดเวลา' : `ตอบ ${a.given}`})</span>
+                {i + 1} · {q.mode === 'set' && 'name' in q.prompt ? `${q.prompt.name} → ` : ''}<b>{q.answer}</b> <span className="text-muted">(Set {q.setId} · {a?.skipped ? 'ยอมแพ้' : a?.given == null ? 'หมดเวลา' : `ตอบ ${a.given}`})</span>
               </li>
             ))}
           </ul>

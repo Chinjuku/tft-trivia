@@ -1,4 +1,5 @@
 import type { ComponentPropsWithRef, ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type Variant = 'primary' | 'ghost' | 'plain'
 
@@ -62,5 +63,21 @@ export function Logo() {
     <span className="text-lg font-bold tracking-wide">
       TFT <span className="text-gold">Trivia</span>
     </span>
+  )
+}
+
+/** "← หน้าแรก" link; asks first when leaving would throw away progress. */
+export function BackButton({ to = '/', label = 'หน้าแรก', confirmMessage }: { to?: string; label?: string; confirmMessage?: string }) {
+  const navigate = useNavigate()
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        if (!confirmMessage || window.confirm(confirmMessage)) navigate(to)
+      }}
+      className="self-start text-sm text-muted hover:text-gold"
+    >
+      ← {label}
+    </button>
   )
 }

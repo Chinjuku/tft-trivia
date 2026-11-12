@@ -55,6 +55,14 @@ html {
   background: #3a3f49;
 }
 
+/* Tailwind v4 resets buttons to the default cursor */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+select,
+summary {
+  cursor: pointer;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);

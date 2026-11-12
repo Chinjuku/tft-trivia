@@ -9,17 +9,30 @@ import { MODE_LABEL } from '../../ui/labels'
 import { Card, ErrorBox, Loading } from '../../ui/kit'
 import { useAsync } from '../../ui/useAsync'
 import { parsePlay, playPath, QUIZ_COUNT } from '../routes'
-import { QuizRunner, type AnswerRecord } from './QuizRunner'
+import { QuizRunner, type AnswerRecord, type NameOptions } from './QuizRunner'
+import type { SetData } from '../../data/types'
+import { BackButton } from '../../ui/kit'
 import { Result } from './Result'
 
 interface Prepared {
   questions: Question[]
+  nameOptions: NameOptions
   version: number
   fellBack: boolean
   config: QuizConfig
   seed: string
   daily?: string
   alreadyPlayedDaily: boolean
+}
+
+/** Every champion/item/trait name in the chosen sets, for typed-answer autocomplete. */
+function namesOf(sets: SetData[]): NameOptions {
+  const uniq = (xs: string[]) => [...new Set(xs)].sort((a, b) => a.localeCompare(b))
+  return {
+    champion: uniq(sets.flatMap((s) => s.champions.map((c) => c.name))),
+    item: uniq(sets.flatMap((s) => s.items.map((i) => i.name))),
+    trait: uniq(sets.flatMap((s) => s.traits.map((t) => t.name))),
+  }
 }
 
 export function Play() {
@@ -42,15 +55,17 @@ export function Play() {
       const ids = await verifiedSetIds(version)
       const config: QuizConfig = { mode: 'daily', setIds: ids, answerStyle: 'mixed', count: QUIZ_COUNT }
       const seed = dailySeed(date)
-      const questions = generateQuiz(config, seed, await loadSets(version, ids))
-      return { questions, version, fellBack, config, seed, daily: date, alreadyPlayedDaily: !!getDailyQuiz(date) }
+      const sets = await loadSets(version, ids)
+      const questions = generateQuiz(config, seed, sets)
+      return { questions, nameOptions: namesOf(sets), version, fellBack, config, seed, daily: date, alreadyPlayedDaily: !!getDailyQuiz(date) }
     }
     const { version, fellBack } = await resolveVersion(params.version)
     const verified = await verifiedSetIds(version)
     const ids = params.setIds.length ? params.setIds.filter((id) => verified.includes(id)) : verified
     const config: QuizConfig = { mode: params.mode, setIds: ids, answerStyle: params.answerStyle, count: QUIZ_COUNT }
-    const questions = generateQuiz(config, params.seed!, await loadSets(version, ids))
-    return { questions, version, fellBack, config, seed: params.seed!, alreadyPlayedDaily: false }
+    const sets = await loadSets(version, ids)
+    const questions = generateQuiz(config, params.seed!, sets)
+    return { questions, nameOptions: namesOf(sets), version, fellBack, config, seed: params.seed!, alreadyPlayedDaily: false }
   }, [key])
 
   if (state.status === 'loading' || (state.status === 'ready' && !state.value)) return <Loading />
@@ -124,7 +139,8 @@ function PlayView({ prepared, vs }: { prepared: Prepared; vs?: { nick: string; s
           <b>{vs.nick || 'เพื่อน'}</b> ทำไว้ <b className="text-gold">{vs.score.toLocaleString()}</b> คะแนน
         </Card>
       )}
-      <QuizRunner questions={questions} header={title} onDone={finish} />
+      <BackButton confirmMessage="ออกจากเกม? คะแนนรอบนี้จะไม่ถูกบันทึก" />
+      <QuizRunner questions={questions} header={title} onDone={finish} nameOptions={prepared.nameOptions} />
     </div>
   )
 }
