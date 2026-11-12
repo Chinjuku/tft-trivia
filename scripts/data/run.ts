@@ -71,8 +71,20 @@ lines.push(`- not in Meraki (TFT-only or renamed): ${missingMeraki.join(', ') ||
 lines.push('', `## Errors (${errors.length})`, '', ...errors.map((e) => `- ${e}`))
 lines.push('', `## Warnings (${warnings.length})`, '', ...warnings.map((w) => `- ${w}`))
 if (checkImages) lines.push('', `## Broken images (${broken.length})`, '', ...broken.sort().map((b) => `- ${b}`))
-lines.push('', '## Items per set', '')
-for (const s of sets) lines.push(`- **${s.id}**: ${s.items.map((i) => i.name).join(', ')}`)
+lines.push('', '## รายละเอียดแต่ละ Set', '')
+for (const s of sets) {
+  lines.push(`### Set ${s.id} · ${s.name} (แพตช์ ${s.patch})`, '')
+  for (let cost = 1; cost <= 7; cost++) {
+    const cs = s.champions.filter((c) => c.cost === cost)
+    if (cs.length) lines.push(`- **Cost ${cost}** (${cs.length}): ${cs.map((c) => c.name).sort().join(', ')}`)
+  }
+  lines.push(`- **Traits** (${s.traits.length}): ${s.traits.map((t) => `${t.name} [${t.breakpoints.join('/')}]`).sort().join(', ')}`)
+  for (const kind of ['component', 'completed', 'emblem', 'artifact', 'radiant', 'support'] as const) {
+    const its = s.items.filter((i) => i.kind === kind)
+    if (its.length) lines.push(`- **${kind}** (${its.length}): ${its.map((i) => i.name).sort().join(', ')}`)
+  }
+  lines.push('')
+}
 writeFileSync(join(DATA_DIR, 'report.md'), lines.join('\n') + '\n')
 
 if (errors.length) {
