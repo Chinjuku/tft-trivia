@@ -5,6 +5,7 @@
 - **Quiz** 4 โหมด (Champion / Item / Trait / Set ไหน?) ตอบแบบตัวเลือก พิมพ์ หรือผสม
 - **ทายปริศนา** แบบเทียบคุณสมบัติ (Champion / Item / Trait)
 - **ลิงก์ท้าเพื่อน** ได้คำถามชุดเดียวกันเป๊ะ · **Daily** ทุกคนได้ชุดเดียวกันทุกวัน (เวลาไทย)
+- **Link Web** https://chinjuku.github.io/tft-trivia/
 
 > Fan-made project · ไม่ได้รับการรับรองจาก Riot Games. TFT and related assets are property of Riot Games ([Legal Jibber Jabber](https://www.riotgames.com/en/legal)).
 
