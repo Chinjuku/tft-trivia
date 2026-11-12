@@ -38,7 +38,7 @@ export function Chip({ on, children, onClick, title }: { on: boolean; children: 
       title={title}
       aria-pressed={on}
       onClick={onClick}
-      className={`rounded-md border px-2.5 py-1 text-xs transition ${on ? 'border-gold text-gold' : 'border-line text-text/80 hover:border-muted'}`}
+      className={`shrink-0 whitespace-nowrap rounded-md border px-2.5 py-1 text-xs transition ${on ? 'border-gold text-gold' : 'border-line text-text/80 hover:border-muted'}`}
     >
       {children}
     </button>

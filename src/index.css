@@ -69,3 +69,47 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
+
+/* Modal: fade the backdrop, slide the sheet up on phones / scale in on larger screens */
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+@keyframes modal-pop {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+}
+.modal-backdrop {
+  animation: modal-fade 150ms ease-out;
+}
+.modal-panel {
+  animation: modal-up 200ms ease-out;
+}
+@media (min-width: 640px) {
+  .modal-panel {
+    animation: modal-pop 160ms ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-panel {
+    animation: none;
+  }
+}
+
+/* horizontally scrolling chip rows: swipeable, no visible bar */
+.scroll-row {
+  scrollbar-width: none;
+}
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}

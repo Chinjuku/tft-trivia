@@ -72,7 +72,9 @@ export function HintPanel({
   return (
     <div className="mt-3 flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs text-muted">💡 Hint (+{HINT_COST} ครั้ง/อัน)</span>
+        <span className="whitespace-nowrap text-xs text-muted" title={`เปิด Hint แต่ละอัน นับเพิ่ม ${HINT_COST} ครั้ง`}>
+          💡 Hint <span className="hidden sm:inline">(+{HINT_COST} ครั้ง/อัน)</span>
+        </span>
         {hints.map((_, i) => {
           const isOpen = i < opened.length
           const canOpen = i === opened.length && i < unlocked
@@ -83,7 +85,7 @@ export function HintPanel({
               disabled={!canOpen}
               onClick={() => onOpen(i)}
               title={isOpen ? 'เปิดแล้ว' : canOpen ? 'เปิด Hint นี้' : `ปลดล็อกเมื่อทายครบ ${HINT_UNLOCK_AT[i]} ครั้ง`}
-              className={`rounded-md border px-2.5 py-1 text-xs transition ${
+              className={`whitespace-nowrap rounded-md border px-2 py-1 text-xs transition sm:px-2.5 ${
                 isOpen
                   ? 'border-gold/40 text-gold/70'
                   : canOpen
@@ -91,7 +93,7 @@ export function HintPanel({
                     : 'border-line text-muted/60'
               }`}
             >
-              {isOpen ? `✓ Hint ${i + 1}` : canOpen ? `เปิด Hint ${i + 1}` : `🔒 ${HINT_UNLOCK_AT[i]} ครั้ง`}
+              {isOpen ? `✓ ${i + 1}` : canOpen ? `เปิด Hint ${i + 1}` : `🔒 ${HINT_UNLOCK_AT[i]}`}
             </button>
           )
         })}

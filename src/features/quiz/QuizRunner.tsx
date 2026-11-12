@@ -240,11 +240,13 @@ export function QuizRunner({
             type="button"
             disabled={!!hint}
             onClick={() => setHint(quizHint(q, seed))}
-            className="rounded-md border border-gold/60 px-2.5 py-1 text-xs text-gold hover:bg-gold-dim disabled:opacity-40"
+            title={q.style === 'choice' ? 'ตัดตัวเลือกผิดออก 2 ข้อ · ได้คะแนนครึ่งเดียว' : 'บอกตัวอักษรแรกและจำนวนตัวอักษร · ได้คะแนนครึ่งเดียว'}
+            className="whitespace-nowrap rounded-md border border-gold/60 px-2.5 py-1 text-xs text-gold hover:bg-gold-dim disabled:opacity-40"
           >
-            💡 {hint ? 'ใช้ Hint แล้ว' : q.style === 'choice' ? 'Hint: ตัด 2 ตัวเลือก' : 'Hint: ตัวแรก + จำนวนตัวอักษร'} · คะแนนครึ่งเดียว
+            💡 {hint ? 'ใช้ Hint แล้ว' : q.style === 'choice' ? 'Hint: ตัด 2 ข้อ' : 'Hint: ตัวแรก'}
+            <span className="text-gold/70"> · ½ คะแนน</span>
           </button>
-          <button type="button" className="text-xs text-muted underline hover:text-text" onClick={() => submit(null, true)}>
+          <button type="button" className="whitespace-nowrap text-xs text-muted underline hover:text-text" onClick={() => submit(null, true)}>
             ยอมแพ้ข้อนี้
           </button>
         </div>

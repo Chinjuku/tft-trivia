@@ -87,7 +87,7 @@ function GuessSetup({ params }: { params: GuessParams }) {
               type="button"
               aria-pressed={kind === k}
               onClick={() => setKind(k)}
-              className={`rounded-lg border p-3 font-semibold transition ${kind === k ? 'border-gold bg-gold-dim text-gold' : 'border-line hover:border-muted'}`}
+              className={`min-w-0 truncate rounded-lg border px-1 py-3 text-sm font-semibold transition sm:p-3 sm:text-base ${kind === k ? 'border-gold bg-gold-dim text-gold' : 'border-line hover:border-muted'}`}
             >
               {GUESS_LABEL[k]}
             </button>
@@ -289,9 +289,9 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
           />
         )}
       </div>
-      <div className="flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 text-sm">
-        <span className="rounded-md border border-gold/40 px-2 py-0.5 text-gold">{title}</span>
-        <span className="text-muted">
+      <div className="flex w-full max-w-3xl flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm">
+        <span className="whitespace-nowrap rounded-md border border-gold/40 px-2 py-0.5 text-gold">{title}</span>
+        <span className="text-xs text-muted sm:text-sm">
           {scope} · ทายแล้ว {guesses.length} ครั้ง{opened.length ? ` + Hint ${opened.length}` : ''}
         </span>
       </div>
@@ -472,16 +472,22 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
               </ul>
             )}
             <HintPanel hints={hintList} opened={opened} unlocked={unlocked} onOpen={openHint} iconOf={iconOf} />
-            <div className="mt-2 flex items-center justify-between text-xs text-muted">
-              <span>
-                <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-ok align-middle" />ตรง
-                <i className="ml-3 mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-part align-middle" />บางส่วน
-                <i className="ml-3 mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-no align-middle" />ไม่ตรง
-                <span className="ml-3">↑↓ คำตอบสูง/ต่ำกว่า</span>
+            <div className="mt-2 flex items-start justify-between gap-3 text-xs text-muted">
+              <span className="flex flex-wrap gap-x-3 gap-y-1">
+                <span className="whitespace-nowrap">
+                  <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-ok align-middle" />ตรง
+                </span>
+                <span className="whitespace-nowrap">
+                  <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-part align-middle" />บางส่วน
+                </span>
+                <span className="whitespace-nowrap">
+                  <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-no align-middle" />ไม่ตรง
+                </span>
+                <span className="whitespace-nowrap">↑↓ สูง/ต่ำกว่า</span>
               </span>
               <button
                 type="button"
-                className="underline"
+                className="shrink-0 whitespace-nowrap underline"
                 onClick={() => {
                   setGaveUp(true)
                   finish(guesses.length, true)
