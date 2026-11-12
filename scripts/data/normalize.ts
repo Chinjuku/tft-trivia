@@ -83,6 +83,7 @@ export function slug(s: string): string {
 /** CommunityDragon asset path -> pinned PNG url. Pinning to the patch keeps removed assets reachable. */
 export function assetUrl(patch: string, path: string | undefined | null): string {
   if (!path) return ''
+  if (/^\{[0-9a-f]+\}$/i.test(path)) return '' // unresolved hash path — UI shows its letter fallback
   const p = path.toLowerCase().replace(/\.(dds|tex)$/, '.png')
   return `${CDRAGON}/${patch}/game/${p}`
 }

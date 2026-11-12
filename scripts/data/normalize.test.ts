@@ -26,6 +26,7 @@ describe('helpers', () => {
     )
     expect(assetUrl('14.13', 'a/b.TEX')).toBe('https://raw.communitydragon.org/14.13/game/a/b.png')
     expect(assetUrl('1', undefined)).toBe('')
+    expect(assetUrl('16.22', '{0c5a019370385aa2}')).toBe('')
   })
   test('isLocalizedName', () => {
     expect(isLocalizedName('Infinity Edge')).toBe(true)

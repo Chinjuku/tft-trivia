@@ -2,7 +2,8 @@
 import { z } from 'zod'
 import type { SetData } from '../../src/data/types'
 
-const url = z.string().regex(/^https:\/\//)
+/** image url, or '' when the source has none (UI falls back to a letter tile) */
+const url = z.string().regex(/^(https:\/\/.+)?$/)
 
 const ChampionZ = z.object({
   key: z.string().min(1),
