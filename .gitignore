@@ -3,3 +3,5 @@ dist/
 .superpowers/
 scripts/data/raw/
 .DS_Store
+*.local
+*.log
