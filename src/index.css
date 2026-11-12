@@ -31,6 +31,30 @@ html {
   }
 }
 
+/* Dark, thin scrollbars everywhere */
+html {
+  color-scheme: dark;
+  scrollbar-color: #2a2e36 transparent;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2e36 transparent;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2e36;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3f49;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);

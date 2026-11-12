@@ -93,9 +93,23 @@ describe('champion compare', () => {
   })
   test('identical entry is all ok and solved', () => {
     const g = find('champion', '1', 'Garen')
-    expect(compare(g, g, ids).every((c) => c.status === 'ok')).toBe(true)
+    expect(compare(g, g, ids).every((c) => c.status === 'ok' || c.status === 'unknown')).toBe(true)
+    expect(compare(g, g, ids).filter((c) => c.status === 'unknown').map((c) => c.column)).toEqual(['releaseYear', 'position'])
     expect(isSolved(g, g)).toBe(true)
     expect(isSolved(g, find('champion', '4', 'Garen'))).toBe(false)
+  })
+  test('extra columns: debut set, number of sets, LoL release year, lanes', () => {
+    const withMeta = {
+      ...ids,
+      garen: { ...ids.garen, releaseYear: 2010, positions: ['TOP'] },
+      lulu: { ...ids.lulu, releaseYear: 2012, positions: ['SUPPORT', 'TOP'] },
+    }
+    const cells = compare(find('champion', '1', 'Lulu'), find('champion', '4', 'Garen'), withMeta)
+    expect(col(cells, 'debut')).toMatchObject({ status: 'ok' }) // both debut in Set 1
+    expect(col(cells, 'appearances')).toMatchObject({ status: 'no', arrow: 'up' }) // 1 set vs 2
+    expect(col(cells, 'releaseYear')).toMatchObject({ status: 'no', arrow: 'down' })
+    expect(col(cells, 'position').status).toBe('part')
+    expect(col(compare(find('champion', '1', 'Lulu'), find('champion', '4', 'Garen'), ids), 'releaseYear').status).toBe('unknown')
   })
   test('missing tag gives unknown', () => {
     const cells = compare(find('champion', '1', 'Garen'), find('champion', '1', 'Garen'), { ...ids, garen: { ...ids.garen, region: undefined } })
@@ -135,7 +149,7 @@ describe('trait compare', () => {
     expect(col(cells, 'firstTier')).toMatchObject({ status: 'no', arrow: 'down' }) // 3 -> 2
     expect(col(cells, 'champions').status).toBe('ok')
     expect(col(cells, 'costs').status).toBe('no') // 2-2 vs 5-5
-    expect(cells.map((c) => c.column)).toEqual(['set', 'champions', 'tiers', 'firstTier', 'costs'])
+    expect(cells.map((c) => c.column)).toEqual(['set', 'champions', 'tiers', 'firstTier', 'costs', 'appearances'])
   })
   test('cannot compare different kinds', () => {
     expect(() => compare(find('trait', '1', 'Knight'), find('item', '1', 'B.F. Sword'), ids)).toThrow()

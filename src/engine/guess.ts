@@ -20,7 +20,8 @@ export type Entry =
   | { kind: 'champion'; set: SetData; champion: Champion }
   /** Items are merged across sets by name: `set`/`item` are the latest version, `sets` every set it was in. */
   | { kind: 'item'; set: SetData; item: Item; sets: SetData[] }
-  | { kind: 'trait'; set: SetData; trait: Trait }
+  /** appearances = how many of the loaded sets have a trait with this name */
+  | { kind: 'trait'; set: SetData; trait: Trait; appearances: number }
 
 export const entryName = (e: Entry) => (e.kind === 'champion' ? e.champion.name : e.kind === 'item' ? e.item.name : e.trait.name)
 export const entryKey = (e: Entry) =>
@@ -29,10 +30,10 @@ export const entryIcon = (e: Entry) => (e.kind === 'champion' ? e.champion.icon 
 export const entryLabel = (e: Entry) => (e.kind === 'item' ? `${entryName(e)} · ${e.sets.length} Set` : `${entryName(e)} · Set ${e.set.id}`)
 
 export const COLUMNS: Record<GuessKind, string[]> = {
-  champion: ['gender', 'species', 'range', 'damageType', 'role', 'cost', 'traits', 'set', 'region'],
+  champion: ['gender', 'species', 'region', 'range', 'damageType', 'role', 'cost', 'traits', 'set', 'debut', 'appearances', 'releaseYear', 'position'],
   item: ['kind', 'recipe', 'stats', 'firstSet', 'setCount', 'unique'],
   // 'type' (origin/class) is left out: the source data does not record it for most sets
-  trait: ['set', 'champions', 'tiers', 'firstTier', 'costs'],
+  trait: ['set', 'champions', 'tiers', 'firstTier', 'costs', 'appearances'],
 }
 
 const sortSets = (sets: SetData[]) => [...sets].sort((a, b) => a.number - b.number || a.id.localeCompare(b.id))
@@ -42,7 +43,12 @@ export function allEntries(kind: GuessKind, sets: SetData[]): Entry[] {
   const out: Entry[] = []
   for (const set of sortSets(sets)) {
     if (kind === 'champion') for (const c of [...set.champions].sort((a, b) => a.key.localeCompare(b.key))) out.push({ kind, set, champion: c })
-    if (kind === 'trait') for (const t of [...set.traits].sort((a, b) => a.key.localeCompare(b.key))) out.push({ kind, set, trait: t })
+    if (kind === 'trait') {
+      for (const t of [...set.traits].sort((a, b) => a.key.localeCompare(b.key))) {
+        const n = normalizeAnswer(t.name)
+        out.push({ kind, set, trait: t, appearances: sets.filter((s) => s.traits.some((x) => normalizeAnswer(x.name) === n)).length })
+      }
+    }
   }
   if (kind === 'item') {
     // one entry per item name; the latest set's version describes it
@@ -130,16 +136,36 @@ export function compare(g: Entry, t: Entry, identities: Identities): Cell[] {
     const tc = t.champion
     const gi = identities[gc.identity]
     const ti = identities[tc.identity]
+    const setNums = (x: typeof gi) => (x?.sets ?? []).map(Number).filter(Number.isFinite)
+    const debut = (x: typeof gi) => (setNums(x).length ? Math.min(...setNums(x)) : NaN)
+    const gDebut = debut(gi)
+    const tDebut = debut(ti)
+    const debutCell: Cell =
+      !Number.isFinite(gDebut) || !Number.isFinite(tDebut)
+        ? { column: 'debut', value: null, status: 'unknown' }
+        : num('debut', gDebut, tDebut)
+    const yearCell: Cell =
+      gi?.releaseYear == null || ti?.releaseYear == null
+        ? { column: 'releaseYear', value: gi?.releaseYear ?? null, status: 'unknown' }
+        : num('releaseYear', gi.releaseYear, ti.releaseYear)
+    const posCell: Cell =
+      !gi?.positions?.length || !ti?.positions?.length
+        ? { column: 'position', value: gi?.positions ?? null, status: 'unknown' }
+        : overlap('position', gi.positions, ti.positions)
     return [
       eq('gender', gi?.gender, ti?.gender),
       eq('species', gi?.species, ti?.species),
+      eq('region', gi?.region, ti?.region),
       { column: 'range', value: isMelee(gc) ? 'melee' : 'ranged', status: isMelee(gc) === isMelee(tc) ? 'ok' : 'no' },
       eq('damageType', gc.damageType, tc.damageType),
       eq('role', gc.role, tc.role),
       num('cost', gc.cost, tc.cost),
       overlap('traits', traitNames(g.set, gc.traits), traitNames(t.set, tc.traits)),
       setCell(g, t, gc.identity === tc.identity),
-      eq('region', gi?.region, ti?.region),
+      debutCell,
+      num('appearances', gi?.sets.length ?? 0, ti?.sets.length ?? 0),
+      yearCell,
+      posCell,
     ]
   }
   if (g.kind === 'item' && t.kind === 'item') {
@@ -172,6 +198,7 @@ export function compare(g: Entry, t: Entry, identities: Identities): Cell[] {
       num('tiers', gt.breakpoints.length, tt.breakpoints.length),
       num('firstTier', gt.breakpoints[0] ?? 0, tt.breakpoints[0] ?? 0),
       { column: 'costs', value: `${gLo}-${gHi}`, status: costStatus },
+      num('appearances', g.appearances, t.appearances),
     ]
   }
   throw new Error(`cannot compare ${g.kind} with ${t.kind}`)

@@ -22,6 +22,10 @@ export const COLUMN_ICON: Record<string, string> = {
   tiers: '📶',
   firstTier: '🔢',
   costs: '💰',
+  debut: '🌱',
+  appearances: '🔁',
+  releaseYear: '📅',
+  position: '🧭',
 }
 
 /** Columns whose values are names we can show as icons. */
@@ -50,14 +54,14 @@ export function CellValue({ column, value, iconOf }: { column: string; value: Ce
 }
 
 function rangeText(column: string, min?: number, max?: number): string {
-  const fmt = (n: number) => (column === 'set' || column === 'firstSet' ? `Set ${n}` : String(n))
+  const fmt = (n: number) => (column === 'set' || column === 'firstSet' || column === 'debut' ? `Set ${n}` : String(n))
   if (min !== undefined && max !== undefined) return `${fmt(min)} < ? < ${fmt(max)}`
   if (min !== undefined) return `> ${fmt(min)}`
   return `< ${fmt(max!)}`
 }
 
 export function KnownCell({ k, iconOf }: { k: Known; iconOf: IconLookup }) {
-  const base = 'flex h-12 min-w-20 items-center justify-center rounded-md px-1 text-center leading-tight'
+  const base = 'flex h-12 w-full items-center justify-center rounded-md px-1 text-center leading-tight'
   switch (k.kind) {
     case 'exact':
       return (

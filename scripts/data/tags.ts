@@ -32,6 +32,8 @@ export interface MerakiChampion {
   roles?: string[]
   adaptiveType?: string
   faction?: string
+  releaseDate?: string
+  positions?: string[]
 }
 
 const MERAKI_ROLE: [RegExp, Role][] = [
@@ -124,6 +126,8 @@ export function buildIdentities(
       id.gender = tag?.gender
       id.species = tag?.species
       id.region = tag?.region ?? (m ? merakiRegion(m) : undefined)
+      if (m?.releaseDate) id.releaseYear = Number(m.releaseDate.slice(0, 4))
+      if (m?.positions?.length) id.positions = [...m.positions].sort()
       id.reviewed = !!tag?.reviewed && !!id.gender && !!id.species && !!id.region
     }
   }

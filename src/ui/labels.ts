@@ -34,6 +34,10 @@ export const COLUMN_LABEL: Record<string, string> = {
   tiers: 'จำนวนขั้น',
   firstTier: 'ขั้นแรก',
   costs: 'Cost ตัวละคร',
+  debut: 'Set แรก',
+  appearances: 'จำนวน Set',
+  releaseYear: 'ปีที่ออก (LoL)',
+  position: 'เลน (LoL)',
 }
 
 const VALUE_LABEL: Record<string, string> = {
@@ -61,12 +65,17 @@ const VALUE_LABEL: Record<string, string> = {
   origin: 'Origin',
   class: 'Class',
   unique: 'Unique',
+  TOP: 'Top',
+  JUNGLE: 'Jungle',
+  MIDDLE: 'Mid',
+  BOTTOM: 'Bot',
+  SUPPORT: 'Support',
 }
 
 export function valueLabel(column: string, v: unknown): string {
   if (v == null || v === '') return '?'
   if (typeof v === 'boolean') return v ? 'ใช่' : 'ไม่'
-  if (Array.isArray(v)) return v.length ? v.join(', ') : '—'
-  if (column === 'set' || column === 'firstSet') return `Set ${v}`
+  if (Array.isArray(v)) return v.length ? v.map((x) => VALUE_LABEL[String(x)] ?? String(x)).join(', ') : '—'
+  if (column === 'set' || column === 'firstSet' || column === 'debut') return `Set ${v}`
   return VALUE_LABEL[String(v)] ?? String(v)
 }

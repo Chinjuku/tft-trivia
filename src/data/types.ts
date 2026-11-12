@@ -88,6 +88,10 @@ export interface Identity {
   gender?: Gender
   species?: Species
   region?: string
+  /** League of Legends release year (Meraki); absent for TFT-only units */
+  releaseYear?: number
+  /** League lanes, e.g. ["TOP","JUNGLE"] (Meraki) */
+  positions?: string[]
   /** sets this identity appears in */
   sets: string[]
   reviewed: boolean

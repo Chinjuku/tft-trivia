@@ -42,7 +42,9 @@ describe('meraki mapping', () => {
 })
 
 describe('buildIdentities', () => {
-  const meraki = new Map([['garen', { name: 'Garen', roles: ['FIGHTER'], adaptiveType: 'PHYSICAL_DAMAGE', faction: 'demacia' }]])
+  const meraki = new Map([
+    ['garen', { name: 'Garen', roles: ['FIGHTER'], adaptiveType: 'PHYSICAL_DAMAGE', faction: 'demacia', releaseDate: '2010-04-27', positions: ['TOP', 'MIDDLE'] }],
+  ])
 
   test('merges sets, fills role from meraki only when TFT has none', () => {
     const s1 = set('1', [champ('TFT1_garen', 'Garen')])
@@ -50,6 +52,8 @@ describe('buildIdentities', () => {
     const { identities } = buildIdentities([s1, s11], {}, {}, meraki)
     expect(identities.garen.sets).toEqual(['1', '11'])
     expect(identities.garen.region).toBe('Demacia')
+    expect(identities.garen.releaseYear).toBe(2010)
+    expect(identities.garen.positions).toEqual(['MIDDLE', 'TOP'])
     expect(s1.champions[0]).toMatchObject({ role: 'Fighter', damageType: 'AD' })
     expect(s11.champions[0]).toMatchObject({ role: 'Tank', damageType: 'AP' })
   })

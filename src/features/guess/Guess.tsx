@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { dailyVersion, loadIdentities, loadSets, resolveVersion, verifiedSetIds } from '../../data/loader'
+import { dailyVersion, loadIdentities, loadLatest, loadManifest, loadSets, resolveVersion, verifiedSetIds } from '../../data/loader'
 import type { Identities, SetData } from '../../data/types'
 import {
   allEntries,
@@ -23,12 +23,12 @@ import { dailyGuessShare } from '../../engine/score'
 import { getDailyGuess, recordBest, saveDailyGuess } from '../../lib/storage'
 import { Img } from '../../ui/Img'
 import { COLUMN_LABEL, GUESS_LABEL } from '../../ui/labels'
-import { CellValue, COLUMN_ICON, KnownCell, type IconLookup } from './cells'
 import { Button, Card, Chip, ErrorBox, Loading } from '../../ui/kit'
 import { useAsync } from '../../ui/useAsync'
 import { VersusCard } from '../quiz/Result'
-import { guessPath, parseGuess } from '../routes'
+import { guessPath, parseGuess, type GuessParams } from '../routes'
 import { ChallengeShare, CopyTextButton } from '../share/ChallengeShare'
+import { CellValue, COLUMN_ICON, KnownCell, type IconLookup } from './cells'
 
 interface Prepared {
   kind: GuessKind
@@ -46,17 +46,80 @@ interface Prepared {
 
 export function Guess() {
   const [search] = useSearchParams()
-  const navigate = useNavigate()
   const params = parseGuess(search)
   const key = search.toString()
+  // A free round without a seed starts at the setup screen (choose what and which sets).
+  if (!params.daily && !params.seed) return <GuessSetup key={key} params={params} />
+  return <GuessGame key={key} params={params} />
+}
 
-  useEffect(() => {
-    if (!params.daily && !params.seed) navigate(guessPath({ ...params, seed: newSeed() }), { replace: true })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+// ---------------------------------------------------------------- setup
 
-  const state = useAsync<Prepared | null>(async () => {
-    if (!params.daily && !params.seed) return null
+function GuessSetup({ params }: { params: GuessParams }) {
+  const navigate = useNavigate()
+  const state = useAsync(async () => {
+    const v = (await loadLatest()).latest
+    return (await loadManifest(v)).sets.filter((s) => s.status === 'verified').sort((a, b) => a.number - b.number)
+  }, [])
+  const [kind, setKind] = useState<GuessKind>(params.kind)
+  const [chosen, setChosen] = useState<string[]>(params.setIds)
+
+  if (state.status === 'loading') return <Loading />
+  if (state.status === 'error') return <ErrorBox error={state.error} />
+  const sets = state.value
+  const toggle = (id: string) => setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]))
+  const start = (ids: string[]) => navigate(guessPath({ kind, setIds: ids, seed: newSeed() }))
+
+  return (
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
+      <h1 className="text-xl font-bold">ทายปริศนา</h1>
+      <Card>
+        <div className="mb-2 text-sm text-muted">ทายอะไร</div>
+        <div className="grid grid-cols-3 gap-2">
+          {(['champion', 'item', 'trait'] as const).map((k) => (
+            <button
+              key={k}
+              type="button"
+              aria-pressed={kind === k}
+              onClick={() => setKind(k)}
+              className={`rounded-lg border p-3 font-semibold transition ${kind === k ? 'border-gold bg-gold-dim text-gold' : 'border-line hover:border-muted'}`}
+            >
+              {GUESS_LABEL[k]}
+            </button>
+          ))}
+        </div>
+      </Card>
+      <Card>
+        <div className="mb-2 flex items-center justify-between text-sm">
+          <span className="text-muted">ทายจาก Set ไหน</span>
+          <span className="text-xs text-muted">{chosen.length ? `เลือก ${chosen.length} Set` : `ทุก Set (${sets.length})`}</span>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          <Chip on={chosen.length === 0} onClick={() => setChosen([])}>
+            ทุก Set
+          </Chip>
+          {sets.map((s) => (
+            <Chip key={s.id} on={chosen.includes(s.id)} onClick={() => toggle(s.id)} title={s.name}>
+              {s.id}
+            </Chip>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-muted">ยิ่งเลือกน้อย Set ยิ่งง่าย · ตัวเลือกในช่องทายจะมีเฉพาะ Set ที่เลือก</p>
+      </Card>
+      <div className="grid grid-cols-2 gap-2">
+        <Button onClick={() => start(chosen)}>เริ่มทาย</Button>
+        <Button variant="ghost" onClick={() => start([sets[Math.floor(Math.random() * sets.length)].id])}>
+          สุ่ม 1 Set
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------- game
+
+function GuessGame({ params }: { params: GuessParams }) {
+  const state = useAsync<Prepared>(async () => {
     const date = params.daily ? thaiDate() : undefined
     const { version, fellBack } = await resolveVersion(params.version ?? (date ? await dailyVersion(date) : undefined))
     const verified = await verifiedSetIds(version)
@@ -77,12 +140,11 @@ export function Guess() {
       daily: date,
       alreadyPlayedDaily: date ? !!getDailyGuess(date) : false,
     }
-  }, [key])
-
-  if (state.status === 'loading' || (state.status === 'ready' && !state.value)) return <Loading />
+  }, [])
+  if (state.status === 'loading') return <Loading />
   if (state.status === 'error') return <ErrorBox error={state.error} />
   const vs = params.vsNick != null && params.vsScore != null ? { nick: params.vsNick, score: params.vsScore } : undefined
-  return <GuessView key={key} p={state.value!} vs={vs} />
+  return <GuessView p={state.value} vs={vs} />
 }
 
 const TONE: Record<Cell['status'], string> = {
@@ -92,8 +154,22 @@ const TONE: Record<Cell['status'], string> = {
   unknown: 'bg-card border border-line text-muted',
 }
 
+/** Column widths (rem) shared by the header, the known row and every guess row so they line up. */
+const IMG_W = 3
+const COL_W: Record<string, number> = { traits: 7.5, recipe: 7, region: 6.5, position: 6, stats: 6, costs: 5.5 }
+const colW = (c: string) => COL_W[c] ?? 4.75
+const cellStyle = (c: string): CSSProperties => ({ width: `${colW(c)}rem`, flex: 'none' })
+const imgStyle: CSSProperties = { width: `${IMG_W}rem`, flex: 'none' }
+
+function GridRow({ children, className = '', label }: { children: ReactNode; className?: string; label?: string }) {
+  return (
+    <div className={`flex gap-1 ${className}`} aria-label={label}>
+      {children}
+    </div>
+  )
+}
+
 function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number } }) {
-  const navigate = useNavigate()
   const [guesses, setGuesses] = useState<Entry[]>([])
   const [query, setQuery] = useState('')
   const [hi, setHi] = useState(0)
@@ -102,7 +178,10 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   const [focused, setFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const headRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
+  const columns = COLUMNS[p.kind]
   const guessedKeys = useMemo(() => new Set(guesses.map(entryKey)), [guesses])
   const suggestions = useMemo(() => {
     const pool = p.entries.filter((e) => !guessedKeys.has(entryKey(e)) && (!setFilter || e.set.id === setFilter))
@@ -121,8 +200,11 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
     }
     return (column, name) => (column === 'recipe' ? items.get(name) : column === 'traits' ? traits.get(name) : undefined)
   }, [p.sets])
-  const rows = useMemo(() => (p.target ? guesses.map((g) => ({ g, cells: compare(g, p.target!, p.identities) })) : []), [guesses, p.target, p.identities])
-  const known = useMemo(() => knownSoFar(COLUMNS[p.kind], rows.map((r) => r.cells)), [rows, p.kind])
+  const rows = useMemo(
+    () => (p.target ? guesses.map((g) => ({ g, cells: compare(g, p.target!, p.identities) })) : []),
+    [guesses, p.target, p.identities],
+  )
+  const known = useMemo(() => knownSoFar(columns, rows.map((r) => r.cells)), [rows, columns])
   const solved = !!p.target && guesses.some((g) => isSolved(g, p.target!))
   const over = solved || gaveUp
 
@@ -141,192 +223,227 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
     inputRef.current?.focus()
   }
 
+  // keep the pinned header and the guess list horizontally in step on narrow screens
+  const syncing = useRef(false)
+  const sync = (from: HTMLDivElement | null, to: HTMLDivElement | null) => {
+    if (!from || !to || syncing.current) return
+    syncing.current = true
+    to.scrollLeft = from.scrollLeft
+    requestAnimationFrame(() => (syncing.current = false))
+  }
+
   if (!p.target) {
     return (
       <Card>
         <p>ยังไม่มีตัวที่ใช้เป็นคำตอบได้ใน Set ที่เลือก ลองเลือก Set อื่น</p>
-        <Button className="mt-3" variant="ghost" onClick={() => navigate('/')}>
-          หน้าแรก
-        </Button>
       </Card>
     )
   }
 
   const title = p.daily ? 'ทาย Champion ประจำวัน' : `ทาย ${GUESS_LABEL[p.kind]}`
   const scope = p.setIds.length > 6 ? `${p.setIds.length} Set` : p.setIds.map((s) => `Set ${s}`).join(', ')
-  const columns = COLUMNS[p.kind]
+  const boardWidth = `${IMG_W + columns.reduce((s, c) => s + colW(c), 0) + 0.25 * columns.length}rem`
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between text-sm">
+    <div className="mx-auto flex w-full flex-col items-center gap-4">
+      <div className="flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 text-sm">
         <span className="rounded-md border border-gold/40 px-2 py-0.5 text-gold">{title}</span>
         <span className="text-muted">
           {scope} · ทายแล้ว {guesses.length} ครั้ง
         </span>
       </div>
-      {p.fellBack && <Card className="border-part text-sm">ข้อมูลเกมอัปเดตแล้ว คำตอบอาจไม่ตรงกับของเพื่อน</Card>}
-      {p.daily && p.alreadyPlayedDaily && <Card className="text-sm text-muted">คุณเล่นวันนี้ไปแล้ว รอบนี้ไม่นับ</Card>}
+      {p.fellBack && <Card className="w-full max-w-3xl border-part text-sm">ข้อมูลเกมอัปเดตแล้ว คำตอบอาจไม่ตรงกับของเพื่อน</Card>}
+      {p.daily && p.alreadyPlayedDaily && <Card className="w-full max-w-3xl text-sm text-muted">คุณเล่นวันนี้ไปแล้ว รอบนี้ไม่นับ</Card>}
       {vs && (
-        <Card className="text-sm">
+        <Card className="w-full max-w-3xl text-sm">
           <b>{vs.nick || 'เพื่อน'}</b> ทายถูกใน <b className="text-gold">{vs.score}</b> ครั้ง
         </Card>
       )}
 
-      {over ? (
-        <GuessResult p={p} count={guesses.length} gaveUp={gaveUp && !solved} vs={vs} />
-      ) : (
-        <div className="relative">
-          {canFilter && (
-            <div className="mb-2 flex flex-wrap items-center gap-1.5">
-              <span className="mr-1 text-xs text-muted">กรอง Set</span>
-              <Chip on={!setFilter} onClick={() => setSetFilter(null)}>
-                ทุก Set
-              </Chip>
-              {p.setIds.map((id) => (
-                <Chip
-                  key={id}
-                  on={setFilter === id}
-                  onClick={() => {
-                    setSetFilter(setFilter === id ? null : id)
-                    clearTimeout(blurTimer.current)
-                    setFocused(true)
-                    inputRef.current?.focus()
-                  }}
-                >
-                  {id}
-                </Chip>
-              ))}
+      {/* pinned: column headers + what the guesses have revealed (or the answer once over) */}
+      <div
+        ref={headRef}
+        onScroll={() => sync(headRef.current, listRef.current)}
+        className="w-full overflow-x-auto"
+        style={{ maxWidth: `calc(${boardWidth} + 12px)`, scrollbarGutter: 'stable' }}
+      >
+        <div style={{ width: boardWidth }} className="flex flex-col gap-1">
+          <GridRow>
+            <div style={imgStyle} />
+            {columns.map((c) => (
+              <div key={c} style={cellStyle(c)} className="text-center text-xs text-muted">
+                <div className="text-base leading-none">{COLUMN_ICON[c]}</div>
+                {COLUMN_LABEL[c]}
+              </div>
+            ))}
+          </GridRow>
+          <GridRow className="text-xs" label={over ? 'คำตอบ' : 'สิ่งที่รู้แล้ว'}>
+            <div style={imgStyle} className="flex items-center justify-center">
+              {over ? (
+                <Img src={entryIcon(p.target)} name={entryName(p.target)} className="h-12 w-12 max-w-none rounded-md border-2 border-gold" />
+              ) : (
+                <div className="flex h-12 w-12 flex-col items-center justify-center rounded-md border border-gold/60 text-[10px] leading-tight text-gold">
+                  <span className="text-base">★</span>รู้แล้ว
+                </div>
+              )}
             </div>
-          )}
-          <input
-            ref={inputRef}
-            autoFocus
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value)
-              setHi(0)
-            }}
-            onFocus={() => {
-              clearTimeout(blurTimer.current)
-              setFocused(true)
-            }}
-            onClick={() => setFocused(true)}
-            // delay so a click on a suggestion lands before the list closes
-            onBlur={() => {
-              blurTimer.current = setTimeout(() => setFocused(false), 150)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'ArrowDown') {
-                e.preventDefault()
-                setHi((h) => Math.min(h + 1, suggestions.length - 1))
-              } else if (e.key === 'ArrowUp') {
-                e.preventDefault()
-                setHi((h) => Math.max(h - 1, 0))
-              } else if (e.key === 'Enter' && suggestions[hi]) {
-                e.preventDefault()
-                choose(suggestions[hi])
-              } else if (e.key === 'Escape') setQuery('')
-            }}
-            placeholder={setFilter ? `พิมพ์หรือเลือก ${GUESS_LABEL[p.kind]} ใน Set ${setFilter}…` : `พิมพ์ชื่อ ${GUESS_LABEL[p.kind]}…`}
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            role="combobox"
-            aria-expanded={showList}
-            aria-controls="guess-suggestions"
-            className="w-full rounded-lg border border-gold bg-card px-3 py-2.5 text-sm outline-none"
-          />
-          {showList && (
-            <ul id="guess-suggestions" role="listbox" className="absolute z-10 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-line bg-card shadow-xl">
-              {suggestions.map((e, i) => (
-                <li key={entryKey(e)} role="option" aria-selected={i === hi}>
-                  <button
-                    type="button"
-                    onMouseEnter={() => setHi(i)}
-                    onClick={() => choose(e)}
-                    className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm ${i === hi ? 'bg-gold-dim' : ''}`}
+            {over
+              ? compare(p.target, p.target, p.identities).map((c) => (
+                  <div
+                    key={c.column}
+                    style={cellStyle(c.column)}
+                    className="flex h-12 items-center justify-center rounded-md border-2 border-gold bg-gold-dim px-1 text-center leading-tight text-gold"
                   >
-                    <Img src={entryIcon(e)} name={entryName(e)} className="h-6 w-6 rounded" />
-                    {entryName(e)} <span className="text-muted">· {e.kind === 'item' ? `${e.sets.length} Set` : `Set ${e.set.id}`}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="mt-2 flex justify-end">
-            <button type="button" className="text-xs text-muted underline" onClick={() => {
-              setGaveUp(true)
-              finish(guesses.length, true)
-            }}>
-              ยอมแพ้
-            </button>
+                    <CellValue column={c.column} value={c.value} iconOf={iconOf} />
+                  </div>
+                ))
+              : known.map((k) => (
+                  <div key={k.column} style={cellStyle(k.column)}>
+                    <KnownCell k={k} iconOf={iconOf} />
+                  </div>
+                ))}
+          </GridRow>
+        </div>
+      </div>
+
+      {/* the guess box sits in the middle, between what you know and what you tried */}
+      <div className="w-full max-w-2xl">
+        {over ? (
+          <GuessResult p={p} count={guesses.length} gaveUp={gaveUp && !solved} vs={vs} />
+        ) : (
+          <div className="relative">
+            {canFilter && (
+              <div className="mb-2 flex flex-wrap items-center justify-center gap-1.5">
+                <span className="mr-1 text-xs text-muted">กรอง Set</span>
+                <Chip on={!setFilter} onClick={() => setSetFilter(null)}>
+                  ทุก Set
+                </Chip>
+                {p.setIds.map((id) => (
+                  <Chip
+                    key={id}
+                    on={setFilter === id}
+                    onClick={() => {
+                      setSetFilter(setFilter === id ? null : id)
+                      clearTimeout(blurTimer.current)
+                      setFocused(true)
+                      inputRef.current?.focus()
+                    }}
+                  >
+                    {id}
+                  </Chip>
+                ))}
+              </div>
+            )}
+            <input
+              ref={inputRef}
+              autoFocus
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                setHi(0)
+              }}
+              onFocus={() => {
+                clearTimeout(blurTimer.current)
+                setFocused(true)
+              }}
+              onClick={() => setFocused(true)}
+              // delay so a click on a suggestion lands before the list closes
+              onBlur={() => {
+                blurTimer.current = setTimeout(() => setFocused(false), 150)
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowDown') {
+                  e.preventDefault()
+                  setHi((h) => Math.min(h + 1, suggestions.length - 1))
+                } else if (e.key === 'ArrowUp') {
+                  e.preventDefault()
+                  setHi((h) => Math.max(h - 1, 0))
+                } else if (e.key === 'Enter' && suggestions[hi]) {
+                  e.preventDefault()
+                  choose(suggestions[hi])
+                } else if (e.key === 'Escape') setQuery('')
+              }}
+              placeholder={setFilter ? `พิมพ์หรือเลือก ${GUESS_LABEL[p.kind]} ใน Set ${setFilter}…` : `พิมพ์ชื่อ ${GUESS_LABEL[p.kind]}…`}
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck={false}
+              role="combobox"
+              aria-expanded={showList}
+              aria-controls="guess-suggestions"
+              className="w-full rounded-lg border border-gold bg-card px-4 py-3 text-base outline-none"
+            />
+            {showList && (
+              <ul
+                id="guess-suggestions"
+                role="listbox"
+                className="absolute z-20 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-line bg-card shadow-xl"
+              >
+                {suggestions.map((e, i) => (
+                  <li key={entryKey(e)} role="option" aria-selected={i === hi}>
+                    <button
+                      type="button"
+                      onMouseEnter={() => setHi(i)}
+                      onClick={() => choose(e)}
+                      className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm ${i === hi ? 'bg-gold-dim' : ''}`}
+                    >
+                      <Img src={entryIcon(e)} name={entryName(e)} className="h-7 w-7 rounded" />
+                      {entryName(e)} <span className="text-muted">· {e.kind === 'item' ? `${e.sets.length} Set` : `Set ${e.set.id}`}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="mt-2 flex items-center justify-between text-xs text-muted">
+              <span>
+                <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-ok align-middle" />ตรง
+                <i className="ml-3 mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-part align-middle" />บางส่วน
+                <i className="ml-3 mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-no align-middle" />ไม่ตรง
+                <span className="ml-3">↑↓ คำตอบสูง/ต่ำกว่า</span>
+              </span>
+              <button
+                type="button"
+                className="underline"
+                onClick={() => {
+                  setGaveUp(true)
+                  finish(guesses.length, true)
+                }}
+              >
+                ยอมแพ้
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* guesses, newest first; only this part scrolls */}
+      {rows.length > 0 && (
+        <div
+          ref={listRef}
+          onScroll={() => sync(listRef.current, headRef.current)}
+          className="max-h-[55vh] w-full overflow-auto"
+          style={{ maxWidth: `calc(${boardWidth} + 12px)`, scrollbarGutter: 'stable' }}
+        >
+          <div style={{ width: boardWidth }} className="flex flex-col gap-1 text-xs">
+            {rows.map(({ g, cells }) => (
+              <GridRow key={entryKey(g)}>
+                <div style={imgStyle} className="flex items-center justify-center">
+                  <Img src={entryIcon(g)} name={entryName(g)} className="h-12 w-12 max-w-none rounded-md border border-line" />
+                </div>
+                {cells.map((c) => (
+                  <div
+                    key={c.column}
+                    style={cellStyle(c.column)}
+                    className={`flex h-12 items-center justify-center rounded-md px-1 text-center leading-tight ${TONE[c.status]}`}
+                  >
+                    <CellValue column={c.column} value={c.value} iconOf={iconOf} />
+                    {c.arrow && <span className="ml-0.5">{c.arrow === 'up' ? '↑' : '↓'}</span>}
+                  </div>
+                ))}
+              </GridRow>
+            ))}
           </div>
         </div>
       )}
-
-      {(guesses.length > 0 || over) && (
-        // Scrolls on its own so the header + "known so far" row stay pinned at the top.
-        <div className="max-h-[70vh] overflow-auto rounded-lg">
-          <table className="border-separate border-spacing-1 text-center text-xs">
-            <thead className="sticky top-0 z-[2] bg-bg">
-              <tr>
-                <th className="sticky left-0 z-[3] bg-bg" />
-                {columns.map((c) => (
-                  <th key={c} className="min-w-20 pt-1 font-normal text-muted">
-                    <div className="text-base leading-none">{COLUMN_ICON[c]}</div>
-                    {COLUMN_LABEL[c]}
-                  </th>
-                ))}
-              </tr>
-              <tr aria-label={over ? 'คำตอบ' : 'สิ่งที่รู้แล้ว'}>
-                <th className="sticky left-0 z-[3] bg-bg pb-1 align-middle">
-                  {over ? (
-                    <Img src={entryIcon(p.target)} name={entryName(p.target)} className="h-11 w-11 max-w-none rounded-md border-2 border-gold" />
-                  ) : (
-                    <div className="flex h-11 w-11 flex-col items-center justify-center rounded-md border border-gold/60 text-[10px] leading-tight text-gold">
-                      <span className="text-base">★</span>รู้แล้ว
-                    </div>
-                  )}
-                </th>
-                {over
-                  ? compare(p.target, p.target, p.identities).map((c) => (
-                      <th key={c.column} className="pb-1 font-normal">
-                        <div className="flex h-12 min-w-20 items-center justify-center rounded-md border-2 border-gold bg-gold-dim px-1 leading-tight text-gold">
-                          <CellValue column={c.column} value={c.value} iconOf={iconOf} />
-                        </div>
-                      </th>
-                    ))
-                  : known.map((k) => (
-                      <th key={k.column} className="pb-1 font-normal">
-                        <KnownCell k={k} iconOf={iconOf} />
-                      </th>
-                    ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(({ g, cells }) => (
-                <tr key={entryKey(g)}>
-                  <td className="sticky left-0 z-[1] min-w-12 bg-bg">
-                    <Img src={entryIcon(g)} name={entryName(g)} className="h-11 w-11 max-w-none rounded-md border border-line" />
-                  </td>
-                  {cells.map((c) => (
-                    <td key={c.column} className={`h-12 min-w-20 rounded-md px-1 leading-tight ${TONE[c.status]}`}>
-                      <CellValue column={c.column} value={c.value} iconOf={iconOf} />
-                      {c.arrow && <span className="ml-0.5">{c.arrow === 'up' ? '↑' : '↓'}</span>}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div className="flex flex-wrap gap-3 text-xs text-muted">
-        <span><i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-ok align-middle" />ตรง</span>
-        <span><i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-part align-middle" />ตรงบางส่วน</span>
-        <span><i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-no align-middle" />ไม่ตรง</span>
-        <span>↑↓ คำตอบสูงหรือต่ำกว่า</span>
-      </div>
     </div>
   )
 }
@@ -342,7 +459,7 @@ function GuessResult({ p, count, gaveUp, vs }: { p: Prepared; count: number; gav
           <div>
             <div className="text-sm text-muted">{gaveUp ? 'คำตอบคือ' : `ถูกต้อง! ใช้ ${count} ครั้ง`}</div>
             <div className="text-xl font-bold">{entryName(t)}</div>
-            <div className="text-sm text-gold">Set {t.set.id}</div>
+            <div className="text-sm text-gold">{t.kind === 'item' ? `อยู่ใน ${t.sets.length} Set` : `Set ${t.set.id}`}</div>
           </div>
         </div>
       </Card>
@@ -351,9 +468,7 @@ function GuessResult({ p, count, gaveUp, vs }: { p: Prepared; count: number; gav
         <CopyTextButton label="คัดลอกผลไปแชร์" text={dailyGuessShare(p.daily, count, gaveUp)} />
       ) : (
         !gaveUp && (
-          <ChallengeShare
-            challenge={{ kind: 'guess', dataVersion: p.version, mode: p.kind, setIds: p.setIds, seed: p.seed, score: count }}
-          />
+          <ChallengeShare challenge={{ kind: 'guess', dataVersion: p.version, mode: p.kind, setIds: p.setIds, seed: p.seed, score: count }} />
         )
       )}
       <div className="grid grid-cols-2 gap-2">
