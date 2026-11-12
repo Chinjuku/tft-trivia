@@ -28,5 +28,9 @@ export const SETS: SetSpec[] = [
   { id: '13', number: 13, name: 'Into the Arcane', patch: '15.5', mutator: 'TFTSet13' },
   { id: '14', number: 14, name: 'Cyber City', patch: '15.12', mutator: 'TFTSet14' },
   { id: '15', number: 15, name: 'K.O. Coliseum', patch: '15.20', mutator: 'TFTSet15' },
-  // 16+ filled in after probing 16.x
+  // Names for 16+ not confirmed yet — data files only say "Set16" etc.
+  { id: '16', number: 16, name: 'Set 16', patch: '16.12', mutator: 'TFTSet16' },
+  { id: '17', number: 17, name: 'Set 17', patch: '16.22', mutator: 'TFTSet17' },
+  // current set: data still changing between patches
+  { id: '18', number: 18, name: 'Set 18', patch: '16.22', mutator: 'TFTSet18' },
 ]

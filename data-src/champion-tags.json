@@ -110,6 +110,14 @@
   "species": "celestial",
   "reviewed": false
  },
+ "baronnashor": {
+  "name": "Baron Nashor",
+  "gender": "other",
+  "species": "void",
+  "region": "Summoner's Rift",
+  "note": "epic monster",
+  "reviewed": false
+ },
  "belveth": {
   "name": "Bel'Veth",
   "gender": "female",
@@ -120,6 +128,14 @@
   "name": "Blitzcrank",
   "gender": "male",
   "species": "construct",
+  "reviewed": false
+ },
+ "brambleback": {
+  "name": "Brambleback",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check if buyable unit",
   "reviewed": false
  },
  "brand": {
@@ -139,6 +155,13 @@
   "gender": "female",
   "species": "other",
   "note": "hemolith",
+  "reviewed": false
+ },
+ "brock": {
+  "name": "Brock",
+  "gender": "other",
+  "species": "other",
+  "note": "unknown unit, check",
   "reviewed": false
  },
  "caitlyn": {
@@ -164,6 +187,14 @@
   "name": "Cho'Gath",
   "gender": "male",
   "species": "void",
+  "reviewed": false
+ },
+ "cinderling": {
+  "name": "Cinderling",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
   "reviewed": false
  },
  "corki": {
@@ -209,6 +240,13 @@
   "name": "Ekko",
   "gender": "male",
   "species": "human",
+  "reviewed": false
+ },
+ "elderdragon": {
+  "name": "Elder Dragon",
+  "gender": "other",
+  "species": "dragon",
+  "region": "Summoner's Rift",
   "reviewed": false
  },
  "elise": {
@@ -284,6 +322,14 @@
   "name": "Graves",
   "gender": "male",
   "species": "human",
+  "reviewed": false
+ },
+ "gromp": {
+  "name": "Gromp",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
   "reviewed": false
  },
  "gwen": {
@@ -456,10 +502,26 @@
   "note": "TFT-only",
   "reviewed": false
  },
+ "kobukoyuumi": {
+  "name": "Kobuko & Yuumi",
+  "gender": "other",
+  "species": "yordle",
+  "region": "Ionia",
+  "note": "duo unit",
+  "reviewed": false
+ },
  "kogmaw": {
   "name": "Kog'Maw",
   "gender": "male",
   "species": "void",
+  "reviewed": false
+ },
+ "krug": {
+  "name": "Krug",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
   "reviewed": false
  },
  "ksante": {
@@ -514,6 +576,14 @@
   "species": "human",
   "reviewed": false
  },
+ "luciansenna": {
+  "name": "Lucian & Senna",
+  "gender": "other",
+  "species": "human",
+  "region": "Runeterra",
+  "note": "duo unit",
+  "reviewed": false
+ },
  "lulu": {
   "name": "Lulu",
   "gender": "female",
@@ -547,6 +617,14 @@
   "species": "human",
   "reviewed": false
  },
+ "mamabeak": {
+  "name": "Mama Beak",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
+  "reviewed": false
+ },
  "maokai": {
   "name": "Maokai",
   "gender": "male",
@@ -558,6 +636,20 @@
   "name": "Master Yi",
   "gender": "male",
   "species": "human",
+  "reviewed": false
+ },
+ "meepsie": {
+  "name": "Meepsie",
+  "gender": "other",
+  "species": "other",
+  "note": "unknown unit, check",
+  "reviewed": false
+ },
+ "mel": {
+  "name": "Mel",
+  "gender": "female",
+  "species": "human",
+  "region": "Piltover",
   "reviewed": false
  },
  "milio": {
@@ -583,6 +675,14 @@
   "gender": "female",
   "species": "celestial",
   "note": "half-celestial",
+  "reviewed": false
+ },
+ "murkwolf": {
+  "name": "Murkwolf",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
   "reviewed": false
  },
  "naafiri": {
@@ -685,6 +785,13 @@
   "species": "human",
   "reviewed": false
  },
+ "pebbles": {
+  "name": "Pebbles",
+  "gender": "other",
+  "species": "other",
+  "note": "unknown unit, check",
+  "reviewed": false
+ },
  "poppy": {
   "name": "Poppy",
   "gender": "female",
@@ -777,6 +884,14 @@
   "note": "Kayn darkin form",
   "reviewed": false
  },
+ "riftherald": {
+  "name": "Rift Herald",
+  "gender": "other",
+  "species": "void",
+  "region": "Summoner's Rift",
+  "note": "epic monster",
+  "reviewed": false
+ },
  "riven": {
   "name": "Riven",
   "gender": "female",
@@ -809,6 +924,14 @@
   "note": "Arcane",
   "reviewed": false
  },
+ "scuttlecrab": {
+  "name": "Scuttlecrab",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
+  "reviewed": false
+ },
  "sejuani": {
   "name": "Sejuani",
   "gender": "female",
@@ -819,6 +942,14 @@
   "name": "Senna",
   "gender": "female",
   "species": "human",
+  "reviewed": false
+ },
+ "sentinel": {
+  "name": "Sentinel",
+  "gender": "other",
+  "species": "monster",
+  "region": "Summoner's Rift",
+  "note": "jungle monster; check",
   "reviewed": false
  },
  "seraphine": {
@@ -1008,6 +1139,21 @@
   "species": "dragon",
   "region": "Other",
   "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "themightymech": {
+  "name": "The Mighty Mech",
+  "gender": "other",
+  "species": "construct",
+  "note": "TFT-only mech",
+  "reviewed": false
+ },
+ "thex": {
+  "name": "T-Hex",
+  "gender": "other",
+  "species": "construct",
+  "region": "Piltover",
+  "note": "TFT-only mech",
   "reviewed": false
  },
  "thresh": {
@@ -1219,11 +1365,26 @@
   "species": "human",
   "reviewed": false
  },
+ "yunara": {
+  "name": "Yunara",
+  "gender": "female",
+  "species": "human",
+  "region": "Ionia",
+  "note": "new champion; check",
+  "reviewed": false
+ },
  "yuumi": {
   "name": "Yuumi",
   "gender": "female",
   "species": "other",
   "note": "magic cat",
+  "reviewed": false
+ },
+ "zaahen": {
+  "name": "Zaahen",
+  "gender": "male",
+  "species": "darkin",
+  "note": "new champion; check",
   "reviewed": false
  },
  "zac": {
