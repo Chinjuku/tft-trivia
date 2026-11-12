@@ -5,7 +5,7 @@ export function Prompt({ prompt }: { prompt: PromptT }) {
   switch (prompt.kind) {
     case 'image':
       // name is only for alt/fallback; the fallback letter would give the answer away, so hide it
-      return <Img src={prompt.image} name="?" className="mx-auto h-36 w-36 rounded-lg border border-line" />
+      return <Img src={prompt.image} name="?" className="mx-auto h-40 w-40 rounded-lg border border-line sm:h-48 sm:w-48" />
     case 'recipe':
       return (
         <div className="flex items-center justify-center gap-3">

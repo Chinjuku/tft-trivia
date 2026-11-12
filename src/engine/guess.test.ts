@@ -6,6 +6,7 @@ import {
   eligibleTargets,
   entryKey,
   isSolved,
+  knownSoFar,
   pickTarget,
   reviewedShare,
   searchEntries,
@@ -103,21 +104,28 @@ describe('champion compare', () => {
   })
 })
 
-describe('item compare', () => {
-  test('recipe overlap and stats', () => {
-    const cells = compare(find('item', '1', 'Giant Slayer'), find('item', '1', 'Infinity Edge'), ids)
-    expect(col(cells, 'recipe').status).toBe('part') // shares B.F. Sword
+describe('item compare (merged across sets)', () => {
+  const item = (name: string) => allEntries('item', [s1, s4]).find((e) => e.kind === 'item' && e.item.name === name)!
+  test('one entry per item name, described by its latest set', () => {
+    const names = allEntries('item', [s1, s4]).map((e) => (e.kind === 'item' ? e.item.name : ''))
+    expect(names.filter((n) => n === 'Infinity Edge')).toHaveLength(1)
+    const ie = item('Infinity Edge')
+    expect(ie.kind === 'item' && ie.sets.map((s) => s.id)).toEqual(['1', '4'])
+    expect(ie.set.id).toBe('4')
+    expect(entryKey(ie)).toBe('item:infinityedge')
+  })
+  test('recipe overlap, stats, first set and set count', () => {
+    const cells = compare(item('Giant Slayer'), item('Infinity Edge'), ids)
     expect(col(cells, 'stats').status).toBe('part') // AD
     expect(col(cells, 'unique').status).toBe('no')
-    expect(col(cells, 'set').status).toBe('ok')
-  })
-  test('same item name in another set is partial on set', () => {
-    const cells = compare(find('item', '1', 'Infinity Edge'), find('item', '4', 'Infinity Edge'), ids)
-    expect(col(cells, 'set')).toMatchObject({ status: 'part', arrow: 'up' })
-    expect(col(cells, 'stats').status).toBe('ok')
+    expect(col(cells, 'firstSet').status).toBe('ok') // both debut in Set 1
+    expect(col(cells, 'setCount')).toMatchObject({ status: 'no', arrow: 'up' }) // 1 set vs 2
   })
   test('components have empty recipes that match each other', () => {
-    expect(col(compare(find('item', '1', 'B.F. Sword'), find('item', '1', 'Recurve Bow'), ids), 'recipe').status).toBe('ok')
+    expect(col(compare(item('B.F. Sword'), item('Recurve Bow'), ids), 'recipe').status).toBe('ok')
+  })
+  test('same name is solved regardless of set', () => {
+    expect(isSolved(item('Infinity Edge'), item('Infinity Edge'))).toBe(true)
   })
 })
 
@@ -156,8 +164,8 @@ describe('search', () => {
   test('prefix first, then substring', () => {
     const entries = allEntries('item', [s1, s4])
     const r = searchEntries(entries, 'inf')
-    expect(r.map(entryKey)).toEqual(['1:ie', '4:ie4'])
-    expect(searchEntries(entries, 'sword').map(entryKey)).toEqual(['1:bf'])
+    expect(r.map(entryKey)).toEqual(['item:infinityedge'])
+    expect(searchEntries(entries, 'sword').map(entryKey)).toEqual(['item:bfsword'])
     expect(searchEntries(entries, '')).toEqual([])
   })
 })
@@ -176,5 +184,38 @@ describe('real data', () => {
         expect(compare(t, t, identities).every((c) => c.status === 'ok' || c.status === 'unknown')).toBe(true)
       }
     }
+  })
+})
+
+describe('knownSoFar', () => {
+  test('exact beats range beats partial beats unknown', () => {
+    const rows: Cell[][] = [
+      [
+        { column: 'cost', value: 2, status: 'no', arrow: 'up' },
+        { column: 'traits', value: ['Knight'], status: 'part' },
+        { column: 'gender', value: 'male', status: 'ok' },
+        { column: 'region', value: 'Ionia', status: 'no' },
+      ],
+      [
+        { column: 'cost', value: 5, status: 'no', arrow: 'down' },
+        { column: 'traits', value: ['Noble'], status: 'no' },
+        { column: 'gender', value: 'female', status: 'no' },
+        { column: 'region', value: 'Noxus', status: 'no' },
+      ],
+    ]
+    const k = knownSoFar(['cost', 'traits', 'gender', 'region', 'set'], rows)
+    expect(k[0]).toEqual({ column: 'cost', kind: 'range', min: 2, max: 5 })
+    expect(k[1]).toEqual({ column: 'traits', kind: 'partial', value: ['Knight'] })
+    expect(k[2]).toEqual({ column: 'gender', kind: 'exact', value: 'male' })
+    expect(k[3]).toEqual({ column: 'region', kind: 'unknown' })
+    expect(k[4]).toEqual({ column: 'set', kind: 'unknown' })
+  })
+  test('range keeps the tightest bounds; set ids parse as numbers', () => {
+    const rows: Cell[][] = [
+      [{ column: 'set', value: '4.5', status: 'no', arrow: 'up' }],
+      [{ column: 'set', value: '7', status: 'no', arrow: 'up' }],
+      [{ column: 'set', value: '12', status: 'no', arrow: 'down' }],
+    ]
+    expect(knownSoFar(['set'], rows)[0]).toEqual({ column: 'set', kind: 'range', min: 7, max: 12 })
   })
 })

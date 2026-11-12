@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 export function Layout() {
   return (
-    <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-6">
+    <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-8">
       <main className="flex-1">
         <Outlet />
       </main>

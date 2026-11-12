@@ -21,6 +21,16 @@ body,
   min-height: 100%;
 }
 
+/* Larger base text: 17px on phones, 18px from tablet up (all rem sizes scale with it) */
+html {
+  font-size: 106.25%;
+}
+@media (min-width: 640px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);

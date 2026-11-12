@@ -27,6 +27,8 @@ export const COLUMN_LABEL: Record<string, string> = {
   recipe: 'สูตร',
   stats: 'สเตตัส',
   unique: 'ชิ้นเดียว',
+  firstSet: 'Set แรก',
+  setCount: 'จำนวน Set',
   type: 'ประเภท',
   champions: 'จำนวนตัว',
   tiers: 'จำนวนขั้น',
@@ -65,6 +67,6 @@ export function valueLabel(column: string, v: unknown): string {
   if (v == null || v === '') return '?'
   if (typeof v === 'boolean') return v ? 'ใช่' : 'ไม่'
   if (Array.isArray(v)) return v.length ? v.join(', ') : '—'
-  if (column === 'set') return `Set ${v}`
+  if (column === 'set' || column === 'firstSet') return `Set ${v}`
   return VALUE_LABEL[String(v)] ?? String(v)
 }

@@ -18,17 +18,19 @@ export interface Cell {
 
 export type Entry =
   | { kind: 'champion'; set: SetData; champion: Champion }
-  | { kind: 'item'; set: SetData; item: Item }
+  /** Items are merged across sets by name: `set`/`item` are the latest version, `sets` every set it was in. */
+  | { kind: 'item'; set: SetData; item: Item; sets: SetData[] }
   | { kind: 'trait'; set: SetData; trait: Trait }
 
 export const entryName = (e: Entry) => (e.kind === 'champion' ? e.champion.name : e.kind === 'item' ? e.item.name : e.trait.name)
-export const entryKey = (e: Entry) => `${e.set.id}:${e.kind === 'champion' ? e.champion.key : e.kind === 'item' ? e.item.key : e.trait.key}`
+export const entryKey = (e: Entry) =>
+  e.kind === 'item' ? `item:${normalizeAnswer(e.item.name)}` : `${e.set.id}:${e.kind === 'champion' ? e.champion.key : e.trait.key}`
 export const entryIcon = (e: Entry) => (e.kind === 'champion' ? e.champion.icon : e.kind === 'item' ? e.item.icon : e.trait.icon)
-export const entryLabel = (e: Entry) => `${entryName(e)} · Set ${e.set.id}`
+export const entryLabel = (e: Entry) => (e.kind === 'item' ? `${entryName(e)} · ${e.sets.length} Set` : `${entryName(e)} · Set ${e.set.id}`)
 
 export const COLUMNS: Record<GuessKind, string[]> = {
   champion: ['gender', 'species', 'range', 'damageType', 'role', 'cost', 'traits', 'set', 'region'],
-  item: ['kind', 'recipe', 'stats', 'set', 'unique'],
+  item: ['kind', 'recipe', 'stats', 'firstSet', 'setCount', 'unique'],
   // 'type' (origin/class) is left out: the source data does not record it for most sets
   trait: ['set', 'champions', 'tiers', 'firstTier', 'costs'],
 }
@@ -40,8 +42,23 @@ export function allEntries(kind: GuessKind, sets: SetData[]): Entry[] {
   const out: Entry[] = []
   for (const set of sortSets(sets)) {
     if (kind === 'champion') for (const c of [...set.champions].sort((a, b) => a.key.localeCompare(b.key))) out.push({ kind, set, champion: c })
-    if (kind === 'item') for (const i of [...set.items].sort((a, b) => a.key.localeCompare(b.key))) out.push({ kind, set, item: i })
     if (kind === 'trait') for (const t of [...set.traits].sort((a, b) => a.key.localeCompare(b.key))) out.push({ kind, set, trait: t })
+  }
+  if (kind === 'item') {
+    // one entry per item name; the latest set's version describes it
+    const byName = new Map<string, { set: SetData; item: Item; sets: SetData[] }>()
+    for (const set of sortSets(sets)) {
+      for (const item of set.items) {
+        const k = normalizeAnswer(item.name)
+        const prev = byName.get(k)
+        if (prev) {
+          if (!prev.sets.includes(set)) prev.sets.push(set)
+          prev.set = set
+          prev.item = item
+        } else byName.set(k, { set, item, sets: [set] })
+      }
+    }
+    for (const k of [...byName.keys()].sort()) out.push({ kind: 'item', ...byName.get(k)! })
   }
   return out
 }
@@ -133,11 +150,18 @@ export function compare(g: Entry, t: Entry, identities: Identities): Cell[] {
   if (g.kind === 'item' && t.kind === 'item') {
     const gi = g.item
     const ti = t.item
+    const gFirst = g.sets[0]
+    const tFirst = t.sets[0]
+    const first: Cell =
+      gFirst.id === tFirst.id
+        ? { column: 'firstSet', value: gFirst.id, status: 'ok' }
+        : { column: 'firstSet', value: gFirst.id, status: 'no', arrow: tFirst.number > gFirst.number ? 'up' : 'down' }
     return [
       eq('kind', gi.kind, ti.kind),
       overlap('recipe', itemNames(g.set, gi.recipe), itemNames(t.set, ti.recipe)),
       overlap('stats', gi.stats, ti.stats),
-      setCell(g, t, normalizeAnswer(gi.name) === normalizeAnswer(ti.name)),
+      first,
+      num('setCount', g.sets.length, t.sets.length),
       { column: 'unique', value: gi.unique, status: gi.unique === ti.unique ? 'ok' : 'no' },
     ]
   }
@@ -172,4 +196,39 @@ export function searchEntries(entries: Entry[], query: string, limit = 8): Entry
     else if (n.includes(q)) contains.push(e)
   }
   return [...starts, ...contains].slice(0, limit)
+}
+
+// ---- "what you know so far": the best information per column across all guesses
+
+export type Known =
+  | { column: string; kind: 'exact'; value: Cell['value'] }
+  | { column: string; kind: 'range'; min?: number; max?: number }
+  | { column: string; kind: 'partial'; value: Cell['value'] }
+  | { column: string; kind: 'unknown' }
+
+const toNumber = (v: Cell['value']) => (typeof v === 'number' ? v : Number(v))
+
+/**
+ * Per column: an exact match wins; otherwise arrows narrow a numeric range with exclusive bounds
+ * (answer > min, answer < max); otherwise the first partial match; otherwise unknown.
+ */
+export function knownSoFar(columns: string[], rows: Cell[][]): Known[] {
+  return columns.map((column) => {
+    const cells = rows.map((r) => r.find((c) => c.column === column)).filter((c): c is Cell => !!c)
+    const exact = cells.find((c) => c.status === 'ok')
+    if (exact) return { column, kind: 'exact', value: exact.value }
+    let min: number | undefined
+    let max: number | undefined
+    for (const c of cells) {
+      if (!c.arrow) continue
+      const n = toNumber(c.value)
+      if (!Number.isFinite(n)) continue
+      if (c.arrow === 'up') min = min === undefined ? n : Math.max(min, n)
+      else max = max === undefined ? n : Math.min(max, n)
+    }
+    if (min !== undefined || max !== undefined) return { column, kind: 'range', min, max }
+    const partial = cells.find((c) => c.status === 'part')
+    if (partial) return { column, kind: 'partial', value: partial.value }
+    return { column, kind: 'unknown' }
+  })
 }

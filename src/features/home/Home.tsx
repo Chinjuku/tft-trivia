@@ -91,7 +91,7 @@ function HomeView({ data, today }: { data: HomeData; today: string }) {
 
       <Card>
         <h2 className="mb-3 font-semibold">เล่นอิสระ</h2>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
           {ALL_MODES.map((m) => (
             <button
               key={m}
