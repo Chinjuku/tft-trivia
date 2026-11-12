@@ -71,7 +71,8 @@ const REGION_NAMES: Record<string, string> = {
 
 export function merakiRegion(m: MerakiChampion): string | undefined {
   if (!m.faction) return undefined
-  return REGION_NAMES[m.faction.toLowerCase()] ?? m.faction.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  const k = m.faction.toLowerCase().replace(/[-\s]/g, '_')
+  return REGION_NAMES[k] ?? k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 /** Meraki's full champion map, keyed by slug(name). Downloaded once into raw/. */

@@ -1,0 +1,1281 @@
+{
+ "aatrox": {
+  "name": "Aatrox",
+  "gender": "male",
+  "species": "darkin",
+  "reviewed": false
+ },
+ "ahri": {
+  "name": "Ahri",
+  "gender": "female",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "akali": {
+  "name": "Akali",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "akshan": {
+  "name": "Akshan",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "alistar": {
+  "name": "Alistar",
+  "gender": "male",
+  "species": "monster",
+  "note": "minotaur",
+  "reviewed": false
+ },
+ "alune": {
+  "name": "Alune",
+  "gender": "female",
+  "species": "human",
+  "region": "Targon",
+  "note": "Aphelios sister; spirit form",
+  "reviewed": false
+ },
+ "ambessa": {
+  "name": "Ambessa",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "amumu": {
+  "name": "Amumu",
+  "gender": "male",
+  "species": "undead",
+  "note": "yordle mummy",
+  "reviewed": false
+ },
+ "anivia": {
+  "name": "Anivia",
+  "gender": "female",
+  "species": "celestial",
+  "note": "demigod cryophoenix",
+  "reviewed": false
+ },
+ "annie": {
+  "name": "Annie",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "aoshin": {
+  "name": "Ao Shin",
+  "gender": "male",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "aphelios": {
+  "name": "Aphelios",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "ashe": {
+  "name": "Ashe",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "aurelionsol": {
+  "name": "Aurelion Sol",
+  "gender": "male",
+  "species": "celestial",
+  "note": "celestial dragon",
+  "reviewed": false
+ },
+ "aurora": {
+  "name": "Aurora",
+  "gender": "female",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "azir": {
+  "name": "Azir",
+  "gender": "male",
+  "species": "celestial",
+  "note": "Ascended",
+  "reviewed": false
+ },
+ "bard": {
+  "name": "Bard",
+  "gender": "male",
+  "species": "celestial",
+  "reviewed": false
+ },
+ "belveth": {
+  "name": "Bel'Veth",
+  "gender": "female",
+  "species": "void",
+  "reviewed": false
+ },
+ "blitzcrank": {
+  "name": "Blitzcrank",
+  "gender": "male",
+  "species": "construct",
+  "reviewed": false
+ },
+ "brand": {
+  "name": "Brand",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "braum": {
+  "name": "Braum",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "briar": {
+  "name": "Briar",
+  "gender": "female",
+  "species": "other",
+  "note": "hemolith",
+  "reviewed": false
+ },
+ "caitlyn": {
+  "name": "Caitlyn",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "camille": {
+  "name": "Camille",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "cassiopeia": {
+  "name": "Cassiopeia",
+  "gender": "female",
+  "species": "monster",
+  "note": "serpent form",
+  "reviewed": false
+ },
+ "chogath": {
+  "name": "Cho'Gath",
+  "gender": "male",
+  "species": "void",
+  "reviewed": false
+ },
+ "corki": {
+  "name": "Corki",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "daeja": {
+  "name": "Daeja",
+  "gender": "female",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "darius": {
+  "name": "Darius",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "diana": {
+  "name": "Diana",
+  "gender": "female",
+  "species": "human",
+  "note": "Aspect host",
+  "reviewed": false
+ },
+ "draven": {
+  "name": "Draven",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "drmundo": {
+  "name": "Dr. Mundo",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "ekko": {
+  "name": "Ekko",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "elise": {
+  "name": "Elise",
+  "gender": "female",
+  "species": "human",
+  "note": "spider form",
+  "reviewed": false
+ },
+ "evelynn": {
+  "name": "Evelynn",
+  "gender": "female",
+  "species": "monster",
+  "note": "demon",
+  "reviewed": false
+ },
+ "ezreal": {
+  "name": "Ezreal",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "fiddlesticks": {
+  "name": "Fiddlesticks",
+  "gender": "other",
+  "species": "monster",
+  "note": "demon",
+  "reviewed": false
+ },
+ "fiora": {
+  "name": "Fiora",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "fizz": {
+  "name": "Fizz",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "galio": {
+  "name": "Galio",
+  "gender": "male",
+  "species": "construct",
+  "reviewed": false
+ },
+ "gangplank": {
+  "name": "Gangplank",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "garen": {
+  "name": "Garen",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "gnar": {
+  "name": "Gnar",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "gragas": {
+  "name": "Gragas",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "graves": {
+  "name": "Graves",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "gwen": {
+  "name": "Gwen",
+  "gender": "female",
+  "species": "construct",
+  "note": "magic doll",
+  "reviewed": false
+ },
+ "hecarim": {
+  "name": "Hecarim",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "heimerdinger": {
+  "name": "Heimerdinger",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "hwei": {
+  "name": "Hwei",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "idas": {
+  "name": "Idas",
+  "gender": "male",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "illaoi": {
+  "name": "Illaoi",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "irelia": {
+  "name": "Irelia",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "ivern": {
+  "name": "Ivern",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "janna": {
+  "name": "Janna",
+  "gender": "female",
+  "species": "celestial",
+  "note": "wind spirit",
+  "reviewed": false
+ },
+ "jarvaniv": {
+  "name": "Jarvan IV",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "jax": {
+  "name": "Jax",
+  "gender": "male",
+  "species": "human",
+  "note": "species unknown in lore",
+  "reviewed": false
+ },
+ "jayce": {
+  "name": "Jayce",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "jhin": {
+  "name": "Jhin",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "jinx": {
+  "name": "Jinx",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "kaisa": {
+  "name": "Kai'Sa",
+  "gender": "female",
+  "species": "human",
+  "note": "void symbiote",
+  "reviewed": false
+ },
+ "kalista": {
+  "name": "Kalista",
+  "gender": "female",
+  "species": "undead",
+  "reviewed": false
+ },
+ "karma": {
+  "name": "Karma",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "karthus": {
+  "name": "Karthus",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "kassadin": {
+  "name": "Kassadin",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "katarina": {
+  "name": "Katarina",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "kayle": {
+  "name": "Kayle",
+  "gender": "female",
+  "species": "celestial",
+  "reviewed": false
+ },
+ "kayn": {
+  "name": "Kayn",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "kennen": {
+  "name": "Kennen",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "khazix": {
+  "name": "Kha'Zix",
+  "gender": "male",
+  "species": "void",
+  "reviewed": false
+ },
+ "kindred": {
+  "name": "Kindred",
+  "gender": "other",
+  "species": "celestial",
+  "reviewed": false
+ },
+ "kled": {
+  "name": "Kled",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "kobuko": {
+  "name": "Kobuko",
+  "gender": "male",
+  "species": "yordle",
+  "region": "Ionia",
+  "note": "TFT-only",
+  "reviewed": false
+ },
+ "kogmaw": {
+  "name": "Kog'Maw",
+  "gender": "male",
+  "species": "void",
+  "reviewed": false
+ },
+ "ksante": {
+  "name": "K'Sante",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "leblanc": {
+  "name": "LeBlanc",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "leesin": {
+  "name": "Lee Sin",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "leona": {
+  "name": "Leona",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "lillia": {
+  "name": "Lillia",
+  "gender": "female",
+  "species": "celestial",
+  "note": "spirit fawn",
+  "reviewed": false
+ },
+ "lissandra": {
+  "name": "Lissandra",
+  "gender": "female",
+  "species": "human",
+  "note": "Iceborn",
+  "reviewed": false
+ },
+ "loris": {
+  "name": "Loris",
+  "gender": "male",
+  "species": "human",
+  "region": "Piltover",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "lucian": {
+  "name": "Lucian",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "lulu": {
+  "name": "Lulu",
+  "gender": "female",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "lux": {
+  "name": "Lux",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "maddie": {
+  "name": "Maddie",
+  "gender": "female",
+  "species": "human",
+  "region": "Piltover",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "malphite": {
+  "name": "Malphite",
+  "gender": "male",
+  "species": "construct",
+  "note": "living rock",
+  "reviewed": false
+ },
+ "malzahar": {
+  "name": "Malzahar",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "maokai": {
+  "name": "Maokai",
+  "gender": "male",
+  "species": "other",
+  "note": "treant",
+  "reviewed": false
+ },
+ "masteryi": {
+  "name": "Master Yi",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "milio": {
+  "name": "Milio",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "missfortune": {
+  "name": "Miss Fortune",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "mordekaiser": {
+  "name": "Mordekaiser",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "morgana": {
+  "name": "Morgana",
+  "gender": "female",
+  "species": "celestial",
+  "note": "half-celestial",
+  "reviewed": false
+ },
+ "naafiri": {
+  "name": "Naafiri",
+  "gender": "female",
+  "species": "darkin",
+  "reviewed": false
+ },
+ "nami": {
+  "name": "Nami",
+  "gender": "female",
+  "species": "vastaya",
+  "note": "Marai",
+  "reviewed": false
+ },
+ "nasus": {
+  "name": "Nasus",
+  "gender": "male",
+  "species": "celestial",
+  "note": "Ascended",
+  "reviewed": false
+ },
+ "nautilus": {
+  "name": "Nautilus",
+  "gender": "male",
+  "species": "other",
+  "note": "cursed diving suit",
+  "reviewed": false
+ },
+ "neeko": {
+  "name": "Neeko",
+  "gender": "female",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "nidalee": {
+  "name": "Nidalee",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "nilah": {
+  "name": "Nilah",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "nocturne": {
+  "name": "Nocturne",
+  "gender": "other",
+  "species": "monster",
+  "note": "demon",
+  "reviewed": false
+ },
+ "nomsy": {
+  "name": "Nomsy",
+  "gender": "other",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only baby dragon",
+  "reviewed": false
+ },
+ "norrayuumi": {
+  "name": "Norra & Yuumi",
+  "gender": "female",
+  "species": "yordle",
+  "region": "Bandle City",
+  "note": "Norra is a yordle",
+  "reviewed": false
+ },
+ "nunuwillump": {
+  "name": "Nunu & Willump",
+  "gender": "male",
+  "species": "human",
+  "note": "Nunu (boy) + Willump",
+  "reviewed": false
+ },
+ "olaf": {
+  "name": "Olaf",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "orianna": {
+  "name": "Orianna",
+  "gender": "female",
+  "species": "construct",
+  "reviewed": false
+ },
+ "ornn": {
+  "name": "Ornn",
+  "gender": "male",
+  "species": "celestial",
+  "note": "demigod",
+  "reviewed": false
+ },
+ "pantheon": {
+  "name": "Pantheon",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "poppy": {
+  "name": "Poppy",
+  "gender": "female",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "powder": {
+  "name": "Powder",
+  "gender": "female",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "pyke": {
+  "name": "Pyke",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "qiyana": {
+  "name": "Qiyana",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "quinn": {
+  "name": "Quinn",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "rakan": {
+  "name": "Rakan",
+  "gender": "male",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "rammus": {
+  "name": "Rammus",
+  "gender": "male",
+  "species": "monster",
+  "note": "armordillo",
+  "reviewed": false
+ },
+ "reksai": {
+  "name": "Rek'Sai",
+  "gender": "female",
+  "species": "void",
+  "reviewed": false
+ },
+ "rell": {
+  "name": "Rell",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "renataglasc": {
+  "name": "Renata Glasc",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "renekton": {
+  "name": "Renekton",
+  "gender": "male",
+  "species": "celestial",
+  "note": "Ascended",
+  "reviewed": false
+ },
+ "rengar": {
+  "name": "Rengar",
+  "gender": "male",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "renni": {
+  "name": "Renni",
+  "gender": "female",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane chem-baron",
+  "reviewed": false
+ },
+ "rhaast": {
+  "name": "Rhaast",
+  "gender": "male",
+  "species": "darkin",
+  "region": "Ionia",
+  "note": "Kayn darkin form",
+  "reviewed": false
+ },
+ "riven": {
+  "name": "Riven",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "rumble": {
+  "name": "Rumble",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "ryze": {
+  "name": "Ryze",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "samira": {
+  "name": "Samira",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "scar": {
+  "name": "Scar",
+  "gender": "male",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "sejuani": {
+  "name": "Sejuani",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "senna": {
+  "name": "Senna",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "seraphine": {
+  "name": "Seraphine",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "sett": {
+  "name": "Sett",
+  "gender": "male",
+  "species": "vastaya",
+  "note": "half-vastaya",
+  "reviewed": false
+ },
+ "sevika": {
+  "name": "Sevika",
+  "gender": "female",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "shaco": {
+  "name": "Shaco",
+  "gender": "male",
+  "species": "monster",
+  "note": "demon?",
+  "reviewed": false
+ },
+ "shen": {
+  "name": "Shen",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "shiohyu": {
+  "name": "Shi Oh Yu",
+  "gender": "female",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "shyvana": {
+  "name": "Shyvana",
+  "gender": "female",
+  "species": "dragon",
+  "note": "half-dragon",
+  "reviewed": false
+ },
+ "silco": {
+  "name": "Silco",
+  "gender": "male",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "singed": {
+  "name": "Singed",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "sion": {
+  "name": "Sion",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "sivir": {
+  "name": "Sivir",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "skarner": {
+  "name": "Skarner",
+  "gender": "male",
+  "species": "monster",
+  "note": "brackern",
+  "reviewed": false
+ },
+ "smeech": {
+  "name": "Smeech",
+  "gender": "male",
+  "species": "yordle",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "smolder": {
+  "name": "Smolder",
+  "gender": "male",
+  "species": "dragon",
+  "reviewed": false
+ },
+ "sohm": {
+  "name": "Sohm",
+  "gender": "male",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "sona": {
+  "name": "Sona",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "soraka": {
+  "name": "Soraka",
+  "gender": "female",
+  "species": "celestial",
+  "reviewed": false
+ },
+ "steb": {
+  "name": "Steb",
+  "gender": "male",
+  "species": "human",
+  "region": "Piltover",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "swain": {
+  "name": "Swain",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "syfen": {
+  "name": "Sy'fen",
+  "gender": "male",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "sylas": {
+  "name": "Sylas",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "syndra": {
+  "name": "Syndra",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "tahmkench": {
+  "name": "Tahm Kench",
+  "gender": "male",
+  "species": "monster",
+  "note": "demon",
+  "reviewed": false
+ },
+ "taliyah": {
+  "name": "Taliyah",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "talon": {
+  "name": "Talon",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "taric": {
+  "name": "Taric",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "teemo": {
+  "name": "Teemo",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "terra": {
+  "name": "Terra",
+  "gender": "female",
+  "species": "dragon",
+  "region": "Other",
+  "note": "TFT-only dragon",
+  "reviewed": false
+ },
+ "thresh": {
+  "name": "Thresh",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "tristana": {
+  "name": "Tristana",
+  "gender": "female",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "trundle": {
+  "name": "Trundle",
+  "gender": "male",
+  "species": "monster",
+  "note": "troll",
+  "reviewed": false
+ },
+ "tryndamere": {
+  "name": "Tryndamere",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "twistedfate": {
+  "name": "Twisted Fate",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "twitch": {
+  "name": "Twitch",
+  "gender": "male",
+  "species": "monster",
+  "note": "rat",
+  "reviewed": false
+ },
+ "tyrantswain": {
+  "name": "Tyrant Swain",
+  "gender": "male",
+  "species": "human",
+  "region": "Noxus",
+  "note": "TFT form of Swain",
+  "reviewed": false
+ },
+ "udyr": {
+  "name": "Udyr",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "ultimateezreal": {
+  "name": "Ultimate Ezreal",
+  "gender": "male",
+  "species": "human",
+  "region": "Piltover",
+  "note": "TFT form of Ezreal",
+  "reviewed": false
+ },
+ "urgot": {
+  "name": "Urgot",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "vander": {
+  "name": "Vander",
+  "gender": "male",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane",
+  "reviewed": false
+ },
+ "varus": {
+  "name": "Varus",
+  "gender": "male",
+  "species": "darkin",
+  "reviewed": false
+ },
+ "vayne": {
+  "name": "Vayne",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "veigar": {
+  "name": "Veigar",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "velkoz": {
+  "name": "Vel'Koz",
+  "gender": "other",
+  "species": "void",
+  "reviewed": false
+ },
+ "vex": {
+  "name": "Vex",
+  "gender": "female",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "vi": {
+  "name": "Vi",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "viego": {
+  "name": "Viego",
+  "gender": "male",
+  "species": "undead",
+  "reviewed": false
+ },
+ "viktor": {
+  "name": "Viktor",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "violet": {
+  "name": "Violet",
+  "gender": "female",
+  "species": "human",
+  "region": "Zaun",
+  "note": "Arcane young Vi",
+  "reviewed": false
+ },
+ "vladimir": {
+  "name": "Vladimir",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "volibear": {
+  "name": "Volibear",
+  "gender": "male",
+  "species": "celestial",
+  "note": "demigod",
+  "reviewed": false
+ },
+ "warwick": {
+  "name": "Warwick",
+  "gender": "male",
+  "species": "monster",
+  "note": "chimeric",
+  "reviewed": false
+ },
+ "wolf": {
+  "name": "Wolf",
+  "gender": "other",
+  "species": "celestial",
+  "region": "Runeterra",
+  "note": "Kindred's Wolf? check",
+  "reviewed": false
+ },
+ "wukong": {
+  "name": "Wukong",
+  "gender": "male",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "xayah": {
+  "name": "Xayah",
+  "gender": "female",
+  "species": "vastaya",
+  "reviewed": false
+ },
+ "xayahrakan": {
+  "name": "Xayah & Rakan",
+  "gender": "other",
+  "species": "vastaya",
+  "region": "Ionia",
+  "note": "duo unit",
+  "reviewed": false
+ },
+ "xerath": {
+  "name": "Xerath",
+  "gender": "male",
+  "species": "celestial",
+  "note": "Ascended",
+  "reviewed": false
+ },
+ "xinzhao": {
+  "name": "Xin Zhao",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "yasuo": {
+  "name": "Yasuo",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "yone": {
+  "name": "Yone",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "yorick": {
+  "name": "Yorick",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "yuumi": {
+  "name": "Yuumi",
+  "gender": "female",
+  "species": "other",
+  "note": "magic cat",
+  "reviewed": false
+ },
+ "zac": {
+  "name": "Zac",
+  "gender": "male",
+  "species": "other",
+  "note": "blob",
+  "reviewed": false
+ },
+ "zed": {
+  "name": "Zed",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "zeri": {
+  "name": "Zeri",
+  "gender": "female",
+  "species": "human",
+  "reviewed": false
+ },
+ "ziggs": {
+  "name": "Ziggs",
+  "gender": "male",
+  "species": "yordle",
+  "reviewed": false
+ },
+ "zilean": {
+  "name": "Zilean",
+  "gender": "male",
+  "species": "human",
+  "reviewed": false
+ },
+ "zippy": {
+  "name": "Zippy",
+  "gender": "other",
+  "species": "other",
+  "region": "Zaun",
+  "note": "unknown unit, check",
+  "reviewed": false
+ },
+ "zoe": {
+  "name": "Zoe",
+  "gender": "female",
+  "species": "celestial",
+  "reviewed": false
+ },
+ "zyra": {
+  "name": "Zyra",
+  "gender": "female",
+  "species": "other",
+  "note": "plant",
+  "reviewed": false
+ }
+}

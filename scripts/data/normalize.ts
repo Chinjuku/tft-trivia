@@ -202,6 +202,10 @@ export function dedupeOldEraIds(pool: RawItem[], setNo: number): RawItem[] {
 
 export function normalizeSet(raw: RawFile, spec: SetSpec): SetData {
   const rs = pickRawSet(raw, spec)
+  // Some newer files pad names with trailing spaces ("Poppy ")
+  for (const c of rs.champions) c.name = c.name.trim()
+  for (const t of rs.traits) t.name = t.name.trim()
+  for (const i of raw.items) i.name = i.name.trim()
   const setNo = Math.floor(spec.number)
   const keyPrefix = `TFT${spec.id.replace('.', '_')}`
 
@@ -239,7 +243,7 @@ export function normalizeSet(raw: RawFile, spec: SetSpec): SetData {
     const key = c.apiName ?? `${keyPrefix}_${slug(c.name)}`
     const traitKeys: string[] = []
     for (const tn of traitNames) {
-      const t = traitByName.get(tn)
+      const t = traitByName.get(tn.trim())
       if (!t) continue
       traitKeys.push(t.key)
       t.championKeys.push(key)

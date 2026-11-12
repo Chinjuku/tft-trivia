@@ -26,5 +26,7 @@ export const SETS: SetSpec[] = [
   { id: '11', number: 11, name: 'Inkborn Fables', patch: '14.13', mutator: 'TFTSet11' },
   { id: '12', number: 12, name: "Magic n' Mayhem", patch: '14.22', mutator: 'TFTSet12' },
   { id: '13', number: 13, name: 'Into the Arcane', patch: '15.5', mutator: 'TFTSet13' },
-  // 14+ filled in after probing 15.x / 16.x
+  { id: '14', number: 14, name: 'Cyber City', patch: '15.12', mutator: 'TFTSet14' },
+  { id: '15', number: 15, name: 'K.O. Coliseum', patch: '15.20', mutator: 'TFTSet15' },
+  // 16+ filled in after probing 16.x
 ]

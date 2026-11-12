@@ -36,6 +36,8 @@ describe('meraki mapping', () => {
   test('region names', () => {
     expect(merakiRegion({ name: 'x', faction: 'SHADOW_ISLES' })).toBe('Shadow Isles')
     expect(merakiRegion({ name: 'x', faction: 'demacia' })).toBe('Demacia')
+    expect(merakiRegion({ name: 'x', faction: 'Mount-Targon' })).toBe('Targon')
+    expect(merakiRegion({ name: 'x', faction: 'Bandle-City' })).toBe('Bandle City')
   })
 })
 
