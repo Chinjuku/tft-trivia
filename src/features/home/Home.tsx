@@ -144,6 +144,18 @@ function HomeView({ data, today }: { data: HomeData; today: string }) {
         </Button>
       </Card>
 
+      <button
+        type="button"
+        onClick={() => navigate('/browse')}
+        className="flex items-center justify-between rounded-xl border border-line bg-card p-4 text-left transition hover:border-gold"
+      >
+        <span>
+          <b>📚 คลังข้อมูล</b>
+          <span className="block text-xs text-muted">ดู Champion · สกิล · สเตตัส · Trait · Item · Augment ของทุก Set</span>
+        </span>
+        <span className="text-gold">→</span>
+      </button>
+
       <Card>
         <h2 className="font-semibold">ทายปริศนา</h2>
         <p className="mb-3 text-xs text-muted">ทายจากคุณสมบัติ เขียว = ตรง, เหลือง = ตรงบางส่วน, ↑↓ = สูงกว่าหรือต่ำกว่า · ใช้ Set ที่เลือกด้านบน</p>

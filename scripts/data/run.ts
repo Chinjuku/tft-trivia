@@ -9,18 +9,22 @@ import { SETS } from './patches'
 import { buildIdentities, loadMeraki, readJson, SRC_DIR, type IdentityAliases, type TagFile } from './tags'
 import { validateSet } from './validate'
 import { writeVersion } from './write'
+import { buildDetails } from './details'
+import type { SetDetails } from '../../src/data/types'
 
 type ItemOverrides = Record<string, { exclude?: string[] }>
 
 const checkImages = process.argv.includes('--images')
 
 const sets: SetData[] = []
+const details: SetDetails[] = []
 for (const spec of SETS) {
   const raw = (await fetchTftPatch(spec.patch)) as RawFile
   const d = normalizeSet(raw, spec)
   const excl = new Set((readJson<ItemOverrides>(join(SRC_DIR, 'item-overrides.json'), {})[spec.id]?.exclude ?? []).map(slug))
   d.items = d.items.filter((i) => !excl.has(slug(i.name)))
   sets.push(d)
+  details.push(buildDetails(raw, spec, d))
 }
 
 const tags = readJson<TagFile>(join(SRC_DIR, 'champion-tags.json'), {})
@@ -94,5 +98,5 @@ if (errors.length) {
 }
 
 const statuses = Object.fromEntries(SETS.map((s) => [s.id, s.status ?? 'draft'] as const))
-const { version, created } = writeVersion({ sets, identities, statuses })
+const { version, created } = writeVersion({ sets, identities, statuses, details })
 console.log(`${created ? '✓ wrote' : '= unchanged'} data v${version} · ${sets.length} sets · ${ids.length} identities · ${warnings.length} warnings`)

@@ -2,7 +2,7 @@
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { Identities, Latest, Manifest, ManifestSet, SetData } from '../../src/data/types'
+import type { Identities, Latest, Manifest, ManifestSet, SetData, SetDetails } from '../../src/data/types'
 import { DATA_DIR } from './fetch'
 
 export const PUBLIC_DATA = join(DATA_DIR, '..', '..', 'public', 'data')
@@ -11,6 +11,8 @@ export interface Output {
   sets: SetData[]
   identities: Identities
   statuses: Record<string, 'verified' | 'draft'>
+  /** browser-only details per set (optional so older callers/tests still work) */
+  details?: SetDetails[]
 }
 
 /** Stable hash of everything a version contains (excluding the version number itself). */
@@ -19,6 +21,7 @@ export function contentHash(out: Output): string {
   h.update(JSON.stringify(out.sets))
   h.update(JSON.stringify(out.identities))
   h.update(JSON.stringify(out.statuses))
+  if (out.details) h.update(JSON.stringify(out.details))
   return h.digest('hex').slice(0, 16)
 }
 
@@ -53,6 +56,10 @@ export function writeVersion(out: Output, root = PUBLIC_DATA): { version: number
   writeFileSync(join(dir, 'manifest.json'), JSON.stringify(manifest, null, 1) + '\n')
   writeFileSync(join(dir, 'champion-identities.json'), JSON.stringify(out.identities) + '\n')
   for (const s of out.sets) writeFileSync(join(dir, 'sets', `set-${s.id}.json`), JSON.stringify(s) + '\n')
+  if (out.details) {
+    mkdirSync(join(dir, 'details'), { recursive: true })
+    for (const d of out.details) writeFileSync(join(dir, 'details', `set-${d.id}.json`), JSON.stringify(d) + '\n')
+  }
 
   const next: Latest = { latest: version, dailyVersions: latest?.dailyVersions ?? {} }
   writeFileSync(join(root, 'latest.json'), JSON.stringify(next, null, 1) + '\n')

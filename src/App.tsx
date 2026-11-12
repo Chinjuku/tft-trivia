@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import { Browse } from './features/browse/Browse'
 import { ChallengeAccept } from './features/challenge/ChallengeAccept'
 import { Guess } from './features/guess/Guess'
 import { Home } from './features/home/Home'
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="play" element={<Play />} />
           <Route path="guess" element={<Guess />} />
           <Route path="c" element={<ChallengeAccept />} />
+          <Route path="browse" element={<Browse />} />
           {Review && (
             <Route
               path="review"

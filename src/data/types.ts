@@ -104,3 +104,42 @@ export interface Latest {
   /** YYYY-MM-DD (Thai time) -> dataVersion used for that day's Daily */
   dailyVersions: Record<string, number>
 }
+
+// ---- data browser details (public/data/v<N>/details/set-<id>.json)
+
+export interface StatBlock {
+  hp?: number
+  mana?: number
+  initialMana?: number
+  ad?: number
+  attackSpeed?: number
+  armor?: number
+  mr?: number
+  range?: number
+  /** percent */
+  critChance?: number
+}
+
+export interface ChampionDetail {
+  ability?: { name: string; desc: string; icon: string }
+  stats: StatBlock
+}
+
+export interface AugmentDetail {
+  key: string
+  name: string
+  desc: string
+  icon: string
+  tier?: 'silver' | 'gold' | 'prismatic'
+}
+
+export interface SetDetails {
+  id: string
+  /** by champion key */
+  champions: Record<string, ChampionDetail>
+  /** by trait key */
+  traits: Record<string, { desc: string; tiers: { min: number; text: string }[] }>
+  /** by item key */
+  items: Record<string, { desc: string }>
+  augments: AugmentDetail[]
+}
