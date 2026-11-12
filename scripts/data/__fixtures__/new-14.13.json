@@ -1,0 +1,446 @@
+{
+ "items": [
+  {
+   "apiName": "TFT_Item_BFSword",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {
+    "AD": 0.10000000149011612
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Standard/BF_Sword.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "B.F. Sword",
+   "unique": false
+  },
+  {
+   "apiName": "TFT_Item_RecurveBow",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {
+    "AS": 10.0
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Standard/Recurve_Bow.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "Recurve Bow",
+   "unique": false
+  },
+  {
+   "apiName": "TFT_Item_SparringGloves",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {
+    "CritChance": 20.0
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Standard/Sparring_Gloves.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "Sparring Gloves",
+   "unique": false
+  },
+  {
+   "apiName": "TFT_Item_InfinityEdge",
+   "associatedTraits": [],
+   "composition": [
+    "TFT_Item_BFSword",
+    "TFT_Item_SparringGloves"
+   ],
+   "effects": {
+    "AD": 0.3499999940395355,
+    "CritChance": 35.0,
+    "CritDamageToGive": 0.10000000149011612
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Standard/Infinity_Edge.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "Infinity Edge",
+   "unique": false
+  },
+  {
+   "apiName": "TFT11_Item_BruiserEmblemItem",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {
+    "Health": 150.0
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Traits/Spatula/Set11/TFT_Set11_Emblem_Bruiser.tex",
+   "id": null,
+   "incompatibleTraits": [
+    "TFT11_Bruiser"
+   ],
+   "name": "Bruiser Emblem",
+   "unique": true
+  },
+  {
+   "apiName": "TFT_Item_Artifact_Mittens",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {
+    "AS": 60.0,
+    "PercentDR": 20.0
+   },
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Ornn_Items/TFT_Item_Artifact_Mittens.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "Mittens",
+   "unique": false
+  },
+  {
+   "apiName": "TFT9_Consumable_GoldenItemRemover",
+   "associatedTraits": [],
+   "composition": [],
+   "effects": {},
+   "from": null,
+   "icon": "ASSETS/Maps/Particles/TFT/Item_Icons/Consumables/TFT_Item_Consumable_ItemRemover.tex",
+   "id": null,
+   "incompatibleTraits": [],
+   "name": "Golden Item Remover",
+   "unique": false
+  }
+ ],
+ "setData": [
+  {
+   "augments": [],
+   "champions": [
+    {
+     "apiName": "TFT11_Aatrox",
+     "characterName": "TFT11_Aatrox",
+     "cost": 2,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT11_Aatrox.tex",
+     "name": "Aatrox",
+     "role": "APFighter",
+     "squareIcon": "ASSETS/UX/TFT/ChampionSplashes/TFT11_Aatrox_Mobile.tex",
+     "stats": {
+      "armor": 45.0,
+      "attackSpeed": 0.699999988079071,
+      "critChance": 0.25,
+      "critMultiplier": 1.399999976158142,
+      "damage": 55.0,
+      "hp": 700.0,
+      "initialMana": 0,
+      "magicResist": 45.0,
+      "mana": 60.0,
+      "range": 1.0
+     },
+     "tileIcon": "ASSETS/Characters/TFT11_Aatrox/HUD/TFT11_Aatrox_Square.tex",
+     "traits": [
+      "Ghostly",
+      "Inkshadow",
+      "Bruiser"
+     ]
+    },
+    {
+     "apiName": "TFT11_Ahri",
+     "characterName": "TFT11_Ahri",
+     "cost": 1,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT11_Ahri.tex",
+     "name": "Ahri",
+     "role": "APCaster",
+     "squareIcon": "ASSETS/UX/TFT/ChampionSplashes/TFT11_Ahri_Mobile.tex",
+     "stats": {
+      "armor": 15.0,
+      "attackSpeed": 0.75,
+      "critChance": 0.25,
+      "critMultiplier": 1.399999976158142,
+      "damage": 30.0,
+      "hp": 500.0,
+      "initialMana": 0,
+      "magicResist": 15.0,
+      "mana": 60.0,
+      "range": 4.0
+     },
+     "tileIcon": "ASSETS/Characters/TFT11_Ahri/HUD/TFT11_Ahri_Square.tex",
+     "traits": [
+      "Fated",
+      "Arcanist"
+     ]
+    },
+    {
+     "apiName": "TFT_Voidspawn",
+     "characterName": "TFT_VoidSpawn",
+     "cost": 1,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT_Voidspawn.dds",
+     "name": "Voidspawn",
+     "role": null,
+     "squareIcon": "ASSETS/UX/TFT/ChampionSplashes/TFT_Voidspawn_Mobile.DDS",
+     "stats": {
+      "armor": 30.0,
+      "attackSpeed": 0.75,
+      "critChance": 0.25,
+      "critMultiplier": 1.399999976158142,
+      "damage": 0.0,
+      "hp": null,
+      "initialMana": 0,
+      "magicResist": 30.0,
+      "mana": 0.0,
+      "range": 1.0
+     },
+     "tileIcon": "ASSETS/Characters/TFT_VoidSpawn/HUD/Icons2D/Voidspawn_SquareCopy.dds",
+     "traits": []
+    }
+   ],
+   "items": [
+    "TFT_Item_BFSword",
+    "TFT_Item_RecurveBow",
+    "TFT_Item_SparringGloves",
+    "TFT_Item_InfinityEdge",
+    "TFT11_Item_BruiserEmblemItem",
+    "TFT_Item_Artifact_Mittens",
+    "TFT9_Consumable_GoldenItemRemover"
+   ],
+   "mutator": "TFTSet11",
+   "name": "Set11",
+   "number": 11,
+   "traits": [
+    {
+     "apiName": "TFT11_Ghostly",
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "style": 1,
+       "variables": {
+        "DamagePercent": 0.05000000074505806,
+        "HealingPercent": 0.019999999552965164,
+        "NumInstances": 5.0,
+        "NumSpectres": 2.0,
+        "TickRate": 2.0
+       }
+      },
+      {
+       "maxUnits": 5,
+       "minUnits": 4,
+       "style": 3,
+       "variables": {
+        "DamagePercent": 0.10000000149011612,
+        "HealingPercent": 0.019999999552965164,
+        "NumInstances": 5.0,
+        "NumSpectres": 2.0,
+        "TickRate": 2.0
+       }
+      },
+      {
+       "maxUnits": 7,
+       "minUnits": 6,
+       "style": 4,
+       "variables": {
+        "DamagePercent": 0.1599999964237213,
+        "HealingPercent": 0.019999999552965164,
+        "NumInstances": 5.0,
+        "NumSpectres": 2.0,
+        "TickRate": 2.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 8,
+       "style": 4,
+       "variables": {
+        "DamagePercent": 0.36000001430511475,
+        "HealingPercent": 0.019999999552965164,
+        "NumInstances": 5.0,
+        "NumSpectres": 2.0,
+        "TickRate": 2.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_11_Ghostly.tex",
+     "name": "Ghostly"
+    },
+    {
+     "apiName": "TFT11_Arcanist",
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "style": 1,
+       "variables": {
+        "ArcanistAbilityPower": 20.0,
+        "TeamAbilityPower": 20.0
+       }
+      },
+      {
+       "maxUnits": 5,
+       "minUnits": 4,
+       "style": 3,
+       "variables": {
+        "ArcanistAbilityPower": 50.0,
+        "TeamAbilityPower": 20.0
+       }
+      },
+      {
+       "maxUnits": 7,
+       "minUnits": 6,
+       "style": 4,
+       "variables": {
+        "ArcanistAbilityPower": 90.0,
+        "TeamAbilityPower": 50.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 8,
+       "style": 4,
+       "variables": {
+        "ArcanistAbilityPower": 135.0,
+        "TeamAbilityPower": 135.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_6_Arcanist.tex",
+     "name": "Arcanist"
+    },
+    {
+     "apiName": "TFT11_InkShadow",
+     "effects": [
+      {
+       "maxUnits": 4,
+       "minUnits": 3,
+       "style": 1,
+       "variables": {
+        "IncreasedPercentBuff": null,
+        "PercentBuff": 5.0,
+        "{5ff50860}": 1.0
+       }
+      },
+      {
+       "maxUnits": 6,
+       "minUnits": 5,
+       "style": 3,
+       "variables": {
+        "IncreasedPercentBuff": 11.0,
+        "PercentBuff": 5.0,
+        "{5ff50860}": 2.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 7,
+       "style": 4,
+       "variables": {
+        "IncreasedPercentBuff": 17.0,
+        "PercentBuff": 5.0,
+        "{5ff50860}": 4.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_11_Ink_Shadow.tex",
+     "name": "Inkshadow"
+    },
+    {
+     "apiName": "TFT11_Bruiser",
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "style": 1,
+       "variables": {
+        "BonusPercentHealth": 0.20000000298023224,
+        "RefreshSeconds": 3.0,
+        "SlamPercentHealth": null,
+        "TeamBonusHealth": 100.0
+       }
+      },
+      {
+       "maxUnits": 5,
+       "minUnits": 4,
+       "style": 3,
+       "variables": {
+        "BonusPercentHealth": 0.4000000059604645,
+        "RefreshSeconds": 3.0,
+        "SlamPercentHealth": null,
+        "TeamBonusHealth": 100.0
+       }
+      },
+      {
+       "maxUnits": 7,
+       "minUnits": 6,
+       "style": 3,
+       "variables": {
+        "BonusPercentHealth": 0.6499999761581421,
+        "RefreshSeconds": 3.0,
+        "SlamPercentHealth": null,
+        "TeamBonusHealth": 100.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 8,
+       "style": 4,
+       "variables": {
+        "BonusPercentHealth": 0.800000011920929,
+        "RefreshSeconds": 3.0,
+        "SlamPercentHealth": 0.05999999865889549,
+        "TeamBonusHealth": 100.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_6_Bruiser.tex",
+     "name": "Bruiser"
+    },
+    {
+     "apiName": "TFT11_Fated",
+     "effects": [
+      {
+       "maxUnits": 4,
+       "minUnits": 3,
+       "style": 1,
+       "variables": {
+        "BondIncreasePercent": 1.0,
+        "PairHPBonus": 0.20000000298023224,
+        "{55f4e448}": 0.20000000298023224,
+        "{89fffd48}": 1.0,
+        "{f75cc2d4}": null
+       }
+      },
+      {
+       "maxUnits": 6,
+       "minUnits": 5,
+       "style": 3,
+       "variables": {
+        "BondIncreasePercent": 2.0,
+        "PairHPBonus": 0.20000000298023224,
+        "{55f4e448}": 0.20000000298023224,
+        "{89fffd48}": 1.0,
+        "{f75cc2d4}": 1.0
+       }
+      },
+      {
+       "maxUnits": 9,
+       "minUnits": 7,
+       "style": 4,
+       "variables": {
+        "BondIncreasePercent": 3.0,
+        "PairHPBonus": 0.20000000298023224,
+        "{55f4e448}": 0.20000000298023224,
+        "{89fffd48}": 1.0,
+        "{f75cc2d4}": 1.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 10,
+       "style": 5,
+       "variables": {
+        "BondIncreasePercent": 3.0,
+        "PairHPBonus": 0.20000000298023224,
+        "{55f4e448}": 0.20000000298023224,
+        "{89fffd48}": 1.0,
+        "{f75cc2d4}": 1.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_11_Fated.tex",
+     "name": "Fated"
+    }
+   ]
+  }
+ ]
+}

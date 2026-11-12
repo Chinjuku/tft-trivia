@@ -1,0 +1,342 @@
+{
+ "items": [
+  {
+   "effects": {
+    "MagicResist": 25.0,
+    "Mana": 20.0,
+    "SilenceDuration": 4.0,
+    "{2275757b}": 20.0,
+    "{4516a18d}": 4.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Hush.dds",
+   "id": -46,
+   "name": "Hush",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AS": 15.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_RecurveBow.dds",
+   "id": 2,
+   "name": "Recurve Bow",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AD": 30.0,
+    "{55ce8055}": "null",
+    "{d0fcc895}": 40.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_DeathBlade.dds",
+   "id": 10004,
+   "name": "Deathblade",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AD": 15.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_BFSword.dds",
+   "id": 10003,
+   "name": "B. F. Sword",
+   "unique": false
+  },
+  {
+   "effects": {
+    "{fe9818ef}": 5.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Spatula.dds",
+   "id": 8,
+   "name": "Spatula",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AP": 20.0
+   },
+   "from": [
+    3,
+    8
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Battlecast.dds",
+   "id": 38,
+   "name": "Battlecast Plating",
+   "unique": true
+  },
+  {
+   "effects": {
+    "AD": 15.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_BFSword.dds",
+   "id": 1,
+   "name": "B. F. Sword",
+   "unique": false
+  },
+  {
+   "effects": {},
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Unknown.dds",
+   "id": 100,
+   "name": "Spatula",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AP": 15.0
+   },
+   "from": [
+    3,
+    8
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Set4Dusk.TFT_Set4.dds",
+   "id": 38,
+   "name": "Aspect of Dusk",
+   "unique": true
+  },
+  {
+   "effects": {
+    "AP": 15.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_NeedlesslyLargeRod.dds",
+   "id": 3,
+   "name": "Needlessly Large Rod",
+   "unique": false
+  },
+  {
+   "effects": {
+    "AD": 30.0,
+    "ADPerStack": 20.0,
+    "{ad68ce80}": 1.0
+   },
+   "from": [
+    1,
+    1
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_DeathBlade.dds",
+   "id": 11,
+   "name": "Deathblade",
+   "unique": false
+  }
+ ],
+ "setData": [
+  {
+   "champions": [
+    {
+     "apiName": "TFT4_Aatrox",
+     "cost": 4,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT4_Aatrox.TFT_Set4.dds",
+     "name": "Aatrox",
+     "stats": {
+      "armor": 40.0,
+      "attackSpeed": 0.6499999761581421,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 60.0,
+      "hp": 800.0,
+      "initialMana": 75.0,
+      "magicResist": 40.0,
+      "mana": 150.0,
+      "range": 1.0
+     },
+     "traits": [
+      "Cultist",
+      "Vanguard"
+     ]
+    },
+    {
+     "apiName": "TFT4_Annie",
+     "cost": 2,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT4_Annie.TFT_Set4.dds",
+     "name": "Annie",
+     "stats": {
+      "armor": 40.0,
+      "attackSpeed": 0.6000000238418579,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 45.0,
+      "hp": 750.0,
+      "initialMana": 0,
+      "magicResist": 40.0,
+      "mana": 65.0,
+      "range": 2.0
+     },
+     "traits": [
+      "Fortune",
+      "Mage"
+     ]
+    },
+    {
+     "apiName": "TFT4_Galio",
+     "cost": 1,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT4_Galio.TFT_Set4.dds",
+     "name": "Galio",
+     "stats": {
+      "armor": 40.0,
+      "attackSpeed": 0.6499999761581421,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 0.0,
+      "hp": 1000.0,
+      "initialMana": 75.0,
+      "magicResist": 40.0,
+      "mana": 150.0,
+      "range": 1.0
+     },
+     "traits": []
+    }
+   ],
+   "mutator": "TFTSet4",
+   "name": "Journeys",
+   "number": 4,
+   "traits": [
+    {
+     "apiName": "Fortune",
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "style": 3,
+       "variables": {
+        "{b18a259c}": 1.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 6,
+       "style": 4,
+       "variables": {
+        "{b18a259c}": 2.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_4_Fortune.dds",
+     "name": "Fortune"
+    },
+    {
+     "apiName": "Set4_Mage",
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "style": 1,
+       "variables": {
+        "{1163964f}": 80.0,
+        "{b4a90a5d}": 100.0
+       }
+      },
+      {
+       "maxUnits": 8,
+       "minUnits": 6,
+       "style": 3,
+       "variables": {
+        "{1163964f}": 120.0,
+        "{b4a90a5d}": 100.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 9,
+       "style": 4,
+       "variables": {
+        "{1163964f}": 180.0,
+        "{b4a90a5d}": 100.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_2_Mage.dds",
+     "name": "Mage"
+    },
+    {
+     "apiName": "Set4_Vanguard",
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "style": 1,
+       "variables": {
+        "Armor": 120.0
+       }
+      },
+      {
+       "maxUnits": 5,
+       "minUnits": 4,
+       "style": 2,
+       "variables": {
+        "Armor": 300.0
+       }
+      },
+      {
+       "maxUnits": 7,
+       "minUnits": 6,
+       "style": 3,
+       "variables": {
+        "Armor": 750.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 8,
+       "style": 4,
+       "variables": {
+        "Armor": 2000.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_3_Vanguard.dds",
+     "name": "Vanguard"
+    },
+    {
+     "apiName": "Cultist",
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "style": 1,
+       "variables": {
+        "Health": 800.0,
+        "{0d36fce1}": 1.0,
+        "{170c422e}": 75.0,
+        "{2b3aecac}": 0.14000000059604645,
+        "{a640a6f5}": 50.0
+       }
+      },
+      {
+       "maxUnits": 8,
+       "minUnits": 6,
+       "style": 3,
+       "variables": {
+        "Health": 1400.0,
+        "{0d36fce1}": 2.0,
+        "{170c422e}": 160.0,
+        "{2b3aecac}": 0.14000000059604645,
+        "{a640a6f5}": 50.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 9,
+       "style": 4,
+       "variables": {
+        "Health": 2000.0,
+        "{0d36fce1}": 3.0,
+        "{170c422e}": 280.0,
+        "{2b3aecac}": 0.14000000059604645,
+        "{a640a6f5}": 50.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_4_Cultist.dds",
+     "name": "Cultist"
+    }
+   ]
+  }
+ ]
+}

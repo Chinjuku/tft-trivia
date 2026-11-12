@@ -1,0 +1,309 @@
+{
+ "items": [
+  {
+   "effects": {
+    "{3abb8549}": 20.0,
+    "{4724fc58}": 15.0,
+    "{eac3d5c4}": 125.0
+   },
+   "from": [
+    1,
+    9
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_InfinityEdge.TFT.dds",
+   "id": 19,
+   "name": "Infinity Edge"
+  },
+  {
+   "effects": {},
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Blessing_WildCard.TFT.dds",
+   "id": 200,
+   "name": "Neeko's Help"
+  },
+  {
+   "effects": {
+    "Armor": 20.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_ChainVest.TFT.dds",
+   "id": 5,
+   "name": "Chain Vest"
+  },
+  {
+   "effects": {
+    "AS": 20.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_RecurveBow.TFT.dds",
+   "id": 2,
+   "name": "Recurve Bow"
+  },
+  {
+   "effects": {
+    "{4724fc58}": 20.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_BFSword.TFT.dds",
+   "id": 10003,
+   "name": "B. F. Sword"
+  },
+  {
+   "effects": {
+    "Armor": 20.0
+   },
+   "from": [
+    5,
+    8
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_KnightsVow.TFT.dds",
+   "id": 58,
+   "name": "Knight's Vow"
+  },
+  {
+   "effects": {},
+   "from": [
+    2,
+    2
+   ],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_RapidFirecannon.TFT.dds",
+   "id": 22,
+   "name": "Rapid Firecannon"
+  },
+  {
+   "effects": {
+    "{4724fc58}": 15.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_BFSword.TFT.dds",
+   "id": 1,
+   "name": "B. F. Sword"
+  },
+  {
+   "effects": {
+    "Health": 200.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/Icon_GiantsBelt.TFT.dds",
+   "id": 7,
+   "name": "Giant's Belt"
+  },
+  {
+   "effects": {},
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Unknown.TFT.dds",
+   "id": 100,
+   "name": "Spatula"
+  },
+  {
+   "effects": {
+    "{fe9818ef}": 5.0
+   },
+   "from": [],
+   "icon": "ASSETS/Maps/Particles/TFT/TFT_Item_Spatula.TFT.dds",
+   "id": 8,
+   "name": "Spatula"
+  }
+ ],
+ "sets": {
+  "1": {
+   "champions": [
+    {
+     "cost": 1,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT_Garen.dds",
+     "name": "Garen",
+     "stats": {
+      "armor": 40.0,
+      "attackSpeed": 0.6000000238418579,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 50.0,
+      "hp": 600.0,
+      "initialMana": 0,
+      "magicResist": 20.0,
+      "mana": 100,
+      "range": 1.0
+     },
+     "traits": [
+      "Noble",
+      "Knight"
+     ]
+    },
+    {
+     "cost": 1,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT_Vayne.dds",
+     "name": "Vayne",
+     "stats": {
+      "armor": 25.0,
+      "attackSpeed": 0.699999988079071,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 40.0,
+      "hp": 550.0,
+      "initialMana": 0,
+      "magicResist": 20.0,
+      "mana": 0.0,
+      "range": 3.0
+     },
+     "traits": [
+      "Noble",
+      "Ranger"
+     ]
+    },
+    {
+     "cost": 2,
+     "icon": "ASSETS/UX/TFT/ChampionSplashes/TFT_Lulu.dds",
+     "name": "Lulu",
+     "stats": {
+      "armor": 20.0,
+      "attackSpeed": 0.6000000238418579,
+      "critChance": 0.25,
+      "critMultiplier": 1.5,
+      "damage": 50.0,
+      "hp": 500.0,
+      "initialMana": 50.0,
+      "magicResist": 20.0,
+      "mana": 150.0,
+      "range": 2.0
+     },
+     "traits": [
+      "Yordle",
+      "Sorcerer"
+     ]
+    }
+   ],
+   "name": "Base",
+   "traits": [
+    {
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "variables": {
+        "BlockAmount": 15.0
+       }
+      },
+      {
+       "maxUnits": 5,
+       "minUnits": 4,
+       "variables": {
+        "BlockAmount": 30.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 6,
+       "variables": {
+        "BlockAmount": 60.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_Knight.dds",
+     "name": "Knight"
+    },
+    {
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "variables": {
+        "AP": 40.0
+       }
+      },
+      {
+       "maxUnits": 8,
+       "minUnits": 6,
+       "variables": {
+        "AP": 120.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 9,
+       "variables": {
+        "AP": 200.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_Sorcerer.dds",
+     "name": "Sorcerer"
+    },
+    {
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "variables": {
+        "Armor": 50.0,
+        "Heal": 30.0,
+        "MagicResist": 50.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 6,
+       "variables": {
+        "Armor": 50.0,
+        "Heal": 30.0,
+        "MagicResist": 50.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_Noble.dds",
+     "name": "Noble"
+    },
+    {
+     "effects": [
+      {
+       "maxUnits": 3,
+       "minUnits": 2,
+       "variables": {
+        "ASMultiplier": 2.0,
+        "{1b812333}": 3.0,
+        "{6003afce}": 40.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 4,
+       "variables": {
+        "ASMultiplier": 2.0,
+        "{1b812333}": 3.0,
+        "{6003afce}": 70.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_Ranger.dds",
+     "name": "Ranger"
+    },
+    {
+     "effects": [
+      {
+       "maxUnits": 5,
+       "minUnits": 3,
+       "variables": {
+        "MissPercent": 30.0
+       }
+      },
+      {
+       "maxUnits": 8,
+       "minUnits": 6,
+       "variables": {
+        "MissPercent": 60.0
+       }
+      },
+      {
+       "maxUnits": 25000,
+       "minUnits": 9,
+       "variables": {
+        "MissPercent": 90.0
+       }
+      }
+     ],
+     "icon": "ASSETS/UX/TraitIcons/Trait_Icon_Yordle.dds",
+     "name": "Yordle"
+    }
+   ]
+  }
+ }
+}
