@@ -29,6 +29,7 @@ import { VersusCard } from '../quiz/Result'
 import { guessPath, parseGuess, type GuessParams } from '../routes'
 import { ChallengeShare, CopyTextButton } from '../share/ChallengeShare'
 import { CellValue, COLUMN_ICON, KnownCell, type IconLookup } from './cells'
+import { buildHints } from './hints'
 
 interface Prepared {
   kind: GuessKind
@@ -190,6 +191,13 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   const listRef = useRef<HTMLDivElement>(null)
 
   const columns = COLUMNS[p.kind]
+  const hints = useMemo(() => buildHints(p.kind, p.sets, p.identities), [p.kind, p.sets, p.identities])
+  // fixed-position popover so it is not clipped by the horizontally scrolling header
+  const [hint, setHint] = useState<{ column: string; x: number; y: number } | null>(null)
+  const showHint = (column: string, el: HTMLElement) => {
+    const r = el.getBoundingClientRect()
+    setHint({ column, x: Math.min(Math.max(r.left + r.width / 2, 150), window.innerWidth - 150), y: r.bottom + 6 })
+  }
   const guessedKeys = useMemo(() => new Set(guesses.map(entryKey)), [guesses])
   const suggestions = useMemo(() => {
     const pool = p.entries.filter((e) => !guessedKeys.has(entryKey(e)) && (!setFilter || e.set.id === setFilter))
@@ -268,6 +276,30 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
         </Card>
       )}
 
+      {hint && hints[hint.column] && (
+        <div
+          id="column-hint"
+          role="tooltip"
+          style={{ left: hint.x, top: hint.y }}
+          className="pointer-events-none fixed z-50 w-72 -translate-x-1/2 rounded-lg border border-gold/50 bg-card p-3 text-left text-xs shadow-2xl"
+        >
+          <div className="mb-1 font-semibold text-gold">
+            {COLUMN_ICON[hint.column]} {COLUMN_LABEL[hint.column]}
+          </div>
+          <p className="text-text/90">{hints[hint.column].about}</p>
+          {hints[hint.column].range && <p className="mt-2 text-muted">ช่วงค่า: <b className="text-text">{hints[hint.column].range}</b></p>}
+          {!!hints[hint.column].values?.length && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {hints[hint.column].values!.map((v) => (
+                <span key={v} className="rounded border border-line px-1.5 py-0.5 text-text/90">
+                  {v}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* pinned: column headers + what the guesses have revealed (or the answer once over) */}
       <div
         ref={headRef}
@@ -279,10 +311,21 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
           <GridRow>
             <div style={imgStyle} />
             {columns.map((c) => (
-              <div key={c} style={cellStyle(c)} className="text-center text-xs text-muted">
+              <button
+                type="button"
+                key={c}
+                style={cellStyle(c)}
+                aria-describedby={hint?.column === c ? 'column-hint' : undefined}
+                onMouseEnter={(e) => showHint(c, e.currentTarget)}
+                onMouseLeave={() => setHint(null)}
+                onFocus={(e) => showHint(c, e.currentTarget)}
+                onBlur={() => setHint(null)}
+                onClick={(e) => (hint?.column === c ? setHint(null) : showHint(c, e.currentTarget))}
+                className={`cursor-help rounded-md pb-0.5 text-center text-xs transition hover:bg-card hover:text-text ${hint?.column === c ? 'bg-card text-text' : 'text-muted'}`}
+              >
                 <div className="text-base leading-none">{COLUMN_ICON[c]}</div>
                 {COLUMN_LABEL[c]}
-              </div>
+              </button>
             ))}
           </GridRow>
           <GridRow className="text-xs" label={over ? 'คำตอบ' : 'สิ่งที่รู้แล้ว'}>
