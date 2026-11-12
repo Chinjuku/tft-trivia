@@ -68,7 +68,8 @@ function GuessSetup({ params }: { params: GuessParams }) {
   if (state.status === 'error') return <ErrorBox error={state.error} />
   const sets = state.value
   const toggle = (id: string) => setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]))
-  const start = (ids: string[]) => navigate(guessPath({ kind, setIds: ids, seed: newSeed() }))
+  // items are one merged list across every set, so they always use all sets
+  const start = (ids: string[]) => navigate(guessPath({ kind, setIds: kind === 'item' ? [] : ids, seed: newSeed() }))
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
@@ -89,6 +90,9 @@ function GuessSetup({ params }: { params: GuessParams }) {
           ))}
         </div>
       </Card>
+      {kind === 'item' ? (
+        <Card className="text-sm text-muted">Item รวมทุก Set เป็นชุดเดียว ไม่ต้องเลือก Set</Card>
+      ) : (
       <Card>
         <div className="mb-2 flex items-center justify-between text-sm">
           <span className="text-muted">ทายจาก Set ไหน</span>
@@ -106,11 +110,14 @@ function GuessSetup({ params }: { params: GuessParams }) {
         </div>
         <p className="mt-3 text-xs text-muted">ยิ่งเลือกน้อย Set ยิ่งง่าย · ตัวเลือกในช่องทายจะมีเฉพาะ Set ที่เลือก</p>
       </Card>
-      <div className="grid grid-cols-2 gap-2">
+      )}
+      <div className={`grid gap-2 ${kind === 'item' ? 'grid-cols-1' : 'grid-cols-2'}`}>
         <Button onClick={() => start(chosen)}>เริ่มทาย</Button>
-        <Button variant="ghost" onClick={() => start([sets[Math.floor(Math.random() * sets.length)].id])}>
-          สุ่ม 1 Set
-        </Button>
+        {kind !== 'item' && (
+          <Button variant="ghost" onClick={() => start([sets[Math.floor(Math.random() * sets.length)].id])}>
+            สุ่ม 1 Set
+          </Button>
+        )}
       </div>
     </div>
   )
@@ -123,8 +130,9 @@ function GuessGame({ params }: { params: GuessParams }) {
     const date = params.daily ? thaiDate() : undefined
     const { version, fellBack } = await resolveVersion(params.version ?? (date ? await dailyVersion(date) : undefined))
     const verified = await verifiedSetIds(version)
-    const setIds = params.daily ? verified : params.setIds.length ? params.setIds.filter((s) => verified.includes(s)) : verified
     const kind: GuessKind = params.daily ? 'champion' : params.kind
+    const setIds =
+      params.daily || kind === 'item' ? verified : params.setIds.length ? params.setIds.filter((s) => verified.includes(s)) : verified
     const seed = date ? dailySeed(date) : params.seed!
     const [sets, identities] = await Promise.all([loadSets(version, setIds), loadIdentities(version)])
     return {
@@ -241,7 +249,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   }
 
   const title = p.daily ? 'ทาย Champion ประจำวัน' : `ทาย ${GUESS_LABEL[p.kind]}`
-  const scope = p.setIds.length > 6 ? `${p.setIds.length} Set` : p.setIds.map((s) => `Set ${s}`).join(', ')
+  const scope = p.kind === 'item' ? 'ทุก Set' : p.setIds.length > 6 ? `${p.setIds.length} Set` : p.setIds.map((s) => `Set ${s}`).join(', ')
   const boardWidth = `${IMG_W + columns.reduce((s, c) => s + colW(c), 0) + 0.25 * columns.length}rem`
 
   return (
