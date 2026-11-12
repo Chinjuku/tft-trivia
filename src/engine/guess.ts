@@ -29,7 +29,8 @@ export const entryLabel = (e: Entry) => `${entryName(e)} · Set ${e.set.id}`
 export const COLUMNS: Record<GuessKind, string[]> = {
   champion: ['gender', 'species', 'range', 'damageType', 'role', 'cost', 'traits', 'set', 'region'],
   item: ['kind', 'recipe', 'stats', 'set', 'unique'],
-  trait: ['type', 'set', 'champions', 'tiers', 'firstTier', 'costs'],
+  // 'type' (origin/class) is left out: the source data does not record it for most sets
+  trait: ['set', 'champions', 'tiers', 'firstTier', 'costs'],
 }
 
 const sortSets = (sets: SetData[]) => [...sets].sort((a, b) => a.number - b.number || a.id.localeCompare(b.id))
@@ -147,7 +148,6 @@ export function compare(g: Entry, t: Entry, identities: Identities): Cell[] {
     const [tLo, tHi] = memberCosts(t.set, tt)
     const costStatus: CellStatus = gLo === tLo && gHi === tHi ? 'ok' : gLo <= tHi && tLo <= gHi ? 'part' : 'no'
     return [
-      eq('type', gt.type, tt.type),
       setCell(g, t, normalizeAnswer(gt.name) === normalizeAnswer(tt.name)),
       num('champions', gt.championKeys.length, tt.championKeys.length),
       num('tiers', gt.breakpoints.length, tt.breakpoints.length),

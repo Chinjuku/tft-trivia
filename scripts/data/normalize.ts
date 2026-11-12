@@ -55,6 +55,20 @@ export interface RawFile {
   setData?: RawSet[]
 }
 
+/** The stat each component gives (stable across all sets). */
+export const COMPONENT_STATS: Record<string, string[]> = {
+  bfsword: ['AD'],
+  recurvebow: ['AS'],
+  needlesslylargerod: ['AP'],
+  tearofthegoddess: ['Mana'],
+  chainvest: ['Armor'],
+  negatroncloak: ['MR'],
+  giantsbelt: ['HP'],
+  sparringgloves: ['Crit'],
+  spatula: [],
+  fryingpan: [],
+}
+
 /** Highest cost a buyable champion has had; anything above is a special unit. */
 export const MAX_SHOP_COST = 7
 
@@ -318,6 +332,19 @@ export function normalizeSet(raw: RawFile, spec: SetSpec): SetData {
   }
 
   // Duplicate-named raw items (e.g. two "B.F. Sword" records) collapse into one: point recipes at the kept key.
+  // Old files describe stats inconsistently; components always give the same stat, and a completed item
+  // carries its components' stats. Union keeps whatever extra stat the file did list.
+  const byItemKey = new Map(items.map((i) => [i.key, i]))
+  for (const it of items) {
+    const own = COMPONENT_STATS[slug(it.name)]
+    if (it.kind === 'component' && own) it.stats = [...own]
+  }
+  for (const it of items) {
+    if (!it.recipe) continue
+    const fromParts = it.recipe.flatMap((k) => COMPONENT_STATS[slug(byItemKey.get(keptKeyByName.get(nameByRawKey.get(k) ?? '') ?? k)?.name ?? '')] ?? [])
+    it.stats = [...new Set([...it.stats, ...fromParts])].sort()
+  }
+
   const finalKeys = new Set(items.map((i) => i.key))
   for (const it of items) {
     if (!it.recipe) continue

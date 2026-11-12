@@ -1,16 +1,14 @@
+import { lazy, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import { ChallengeAccept } from './features/challenge/ChallengeAccept'
+import { Guess } from './features/guess/Guess'
+import { Home } from './features/home/Home'
 import { Layout } from './features/layout/Layout'
+import { Play } from './features/quiz/Play'
+import { Loading } from './ui/kit'
 
-function Home() {
-  return (
-    <section className="rounded-xl border border-line bg-card p-6">
-      <h1 className="text-2xl font-bold">
-        TFT <span className="text-gold">Trivia</span>
-      </h1>
-      <p className="mt-2 text-muted">กำลังสร้าง…</p>
-    </section>
-  )
-}
+// Dev-only tag review page; tree-shaken out of production builds.
+const Review = import.meta.env.DEV ? lazy(() => import('./features/review/Review')) : null
 
 export default function App() {
   return (
@@ -18,6 +16,20 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="play" element={<Play />} />
+          <Route path="guess" element={<Guess />} />
+          <Route path="c" element={<ChallengeAccept />} />
+          {Review && (
+            <Route
+              path="review"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Review />
+                </Suspense>
+              }
+            />
+          )}
+          <Route path="*" element={<Home />} />
         </Route>
       </Routes>
     </HashRouter>

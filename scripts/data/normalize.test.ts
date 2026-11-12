@@ -89,7 +89,8 @@ describe('old era (9.21, sets only, numeric item ids)', () => {
       expect(ie.recipe).toHaveLength(2)
       for (const r of ie.recipe!) expect(d.items.find((i) => i.key === r)?.kind).toBe('component')
     }
-    expect(d.items.find((i) => i.name === 'B.F. Sword')?.kind).toBe('component')
+    expect(d.items.find((i) => i.name === 'B.F. Sword')).toMatchObject({ kind: 'component', stats: ['AD'] })
+    if (ie) expect(ie.stats).toContain('AD') // completed items inherit component stats
     expect(d.items.some((i) => i.name === "Neeko's Help")).toBe(false)
   })
 })

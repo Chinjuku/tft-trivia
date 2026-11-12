@@ -128,7 +128,7 @@ describe('trait compare', () => {
     expect(col(cells, 'firstTier')).toMatchObject({ status: 'no', arrow: 'down' }) // 3 -> 2
     expect(col(cells, 'champions').status).toBe('ok')
     expect(col(cells, 'costs').status).toBe('no') // 2-2 vs 5-5
-    expect(col(cells, 'type').status).toBe('unknown')
+    expect(cells.map((c) => c.column)).toEqual(['set', 'champions', 'tiers', 'firstTier', 'costs'])
   })
   test('cannot compare different kinds', () => {
     expect(() => compare(find('trait', '1', 'Knight'), find('item', '1', 'B.F. Sword'), ids)).toThrow()

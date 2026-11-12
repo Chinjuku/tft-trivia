@@ -3,6 +3,9 @@
 import type { GuessKind } from './guess'
 import type { AnswerStyleConfig, QuizMode } from './quiz'
 
+/** Omit that keeps union members apart (plain Omit collapses a union to its common keys). */
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never
+
 export type Challenge =
   | {
       kind: 'quiz'
