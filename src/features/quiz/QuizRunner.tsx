@@ -3,7 +3,8 @@ import { matchesAnswer } from '../../engine/answer'
 import type { Question } from '../../engine/quiz'
 import { QUESTION_TIME_MS, questionScore } from '../../engine/score'
 import { Button } from '../../ui/kit'
-import { Prompt, questionText } from './Prompt'
+import { Prompt } from './Prompt'
+import { questionText } from './questionText'
 
 export interface AnswerRecord {
   given: string | null
@@ -25,37 +26,43 @@ export function QuizRunner({
   const [answers, setAnswers] = useState<AnswerRecord[]>([])
   const [revealed, setRevealed] = useState<AnswerRecord | null>(null)
   const [typed, setTyped] = useState('')
-  const [now, setNow] = useState(() => performance.now())
-  const startedAt = useRef(performance.now())
+  // both set from effects/handlers so render stays pure
+  const [startedAt, setStartedAt] = useState(0)
+  const [now, setNow] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
 
   const q = questions[index]
-  const elapsed = now - startedAt.current
+  const elapsed = startedAt ? now - startedAt : 0
   const remaining = Math.max(0, QUESTION_TIME_MS - elapsed)
   const total = answers.reduce((s, a) => s + a.points, 0)
 
   const submit = useCallback(
     (given: string | null) => {
       if (revealed) return
-      const ms = performance.now() - startedAt.current
+      const ms = performance.now() - startedAt
       const correct = given != null && (q.style === 'choice' ? given === q.answer : matchesAnswer(given, q.answer))
       const rec = { given, correct, ms, points: questionScore(correct, ms) }
       setRevealed(rec)
       setAnswers((a) => [...a, rec])
     },
-    [q, revealed],
+    [q, revealed, startedAt],
   )
 
-  // timer
+  // timer: (re)start the clock for each question
+  useEffect(() => {
+    const t = performance.now()
+    setStartedAt(t)
+    setNow(t)
+  }, [index])
   useEffect(() => {
     if (revealed) return
     const id = setInterval(() => setNow(performance.now()), 100)
     return () => clearInterval(id)
   }, [revealed, index])
   useEffect(() => {
-    if (!revealed && remaining <= 0) submit(null)
-  }, [remaining, revealed, submit])
+    if (startedAt && !revealed && remaining <= 0) submit(null)
+  }, [remaining, revealed, submit, startedAt])
 
   // focus management
   useEffect(() => {
@@ -71,8 +78,6 @@ export function QuizRunner({
     setIndex(index + 1)
     setRevealed(null)
     setTyped('')
-    startedAt.current = performance.now()
-    setNow(performance.now())
   }
 
   if (!q) return null
