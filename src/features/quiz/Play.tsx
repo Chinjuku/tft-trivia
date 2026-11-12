@@ -140,7 +140,7 @@ function PlayView({ prepared, vs }: { prepared: Prepared; vs?: { nick: string; s
         </Card>
       )}
       <BackButton confirmMessage="ออกจากเกม? คะแนนรอบนี้จะไม่ถูกบันทึก" />
-      <QuizRunner questions={questions} header={title} onDone={finish} nameOptions={prepared.nameOptions} />
+      <QuizRunner questions={questions} header={title} onDone={finish} nameOptions={prepared.nameOptions} seed={prepared.seed} />
     </div>
   )
 }

@@ -30,6 +30,8 @@ import { guessPath, parseGuess, type GuessParams } from '../routes'
 import { ChallengeShare, CopyTextButton } from '../share/ChallengeShare'
 import { CellValue, COLUMN_ICON, KnownCell, type IconLookup } from './cells'
 import { buildHints } from './hints'
+import { HintPanel, type OpenedHint } from './HintPanel'
+import { guessHints, guessScore, revealColumn, unlockedHints } from '../../engine/hints'
 
 interface Prepared {
   kind: GuessKind
@@ -225,9 +227,22 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   const solved = !!p.target && guesses.some((g) => isSolved(g, p.target!))
   const over = solved || gaveUp
 
+  // hints: fixed per round (from the seed); 'reveal' is resolved when opened
+  const hintList = useMemo(() => (p.target ? guessHints(p.target, p.seed) : []), [p.target, p.seed])
+  const [opened, setOpened] = useState<OpenedHint[]>([])
+  const unlocked = unlockedHints(guesses.length)
+  const openHint = (i: number) => {
+    const h = hintList[i]
+    if (!h || opened.length !== i || i >= unlocked || !p.target) return
+    const reveal = h.type === 'reveal' ? revealColumn(p.target, guesses, p.identities) : null
+    setOpened([...opened, { hint: h, reveal }])
+  }
+  const score = guessScore(guesses.length, opened.length)
+
   const finish = (count: number, didGiveUp: boolean) => {
-    if (p.daily && !p.alreadyPlayedDaily) saveDailyGuess(p.daily, { guesses: count, gaveUp: didGiveUp })
-    else if (!p.daily && !didGiveUp) recordBest(`guess:${p.kind}`, count, true)
+    const total = guessScore(count, opened.length)
+    if (p.daily && !p.alreadyPlayedDaily) saveDailyGuess(p.daily, { guesses: total, gaveUp: didGiveUp, hints: opened.length })
+    else if (!p.daily && !didGiveUp) recordBest(`guess:${p.kind}`, total, true)
   }
 
   const choose = (e: Entry) => {
@@ -277,7 +292,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
       <div className="flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 text-sm">
         <span className="rounded-md border border-gold/40 px-2 py-0.5 text-gold">{title}</span>
         <span className="text-muted">
-          {scope} · ทายแล้ว {guesses.length} ครั้ง
+          {scope} · ทายแล้ว {guesses.length} ครั้ง{opened.length ? ` + Hint ${opened.length}` : ''}
         </span>
       </div>
       {p.fellBack && <Card className="w-full max-w-3xl border-part text-sm">ข้อมูลเกมอัปเดตแล้ว คำตอบอาจไม่ตรงกับของเพื่อน</Card>}
@@ -372,7 +387,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
       {/* the guess box sits in the middle, between what you know and what you tried */}
       <div className="w-full max-w-2xl">
         {over ? (
-          <GuessResult p={p} count={guesses.length} gaveUp={gaveUp && !solved} vs={vs} />
+          <GuessResult p={p} count={score} hints={opened.length} gaveUp={gaveUp && !solved} vs={vs} />
         ) : (
           <div className="relative">
             {canFilter && (
@@ -456,6 +471,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
                 ))}
               </ul>
             )}
+            <HintPanel hints={hintList} opened={opened} unlocked={unlocked} onOpen={openHint} iconOf={iconOf} />
             <div className="mt-2 flex items-center justify-between text-xs text-muted">
               <span>
                 <i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-ok align-middle" />ตรง
@@ -511,7 +527,19 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   )
 }
 
-function GuessResult({ p, count, gaveUp, vs }: { p: Prepared; count: number; gaveUp: boolean; vs?: { nick: string; score: number } }) {
+function GuessResult({
+  p,
+  count,
+  hints,
+  gaveUp,
+  vs,
+}: {
+  p: Prepared
+  count: number
+  hints: number
+  gaveUp: boolean
+  vs?: { nick: string; score: number }
+}) {
   const navigate = useNavigate()
   const t = p.target!
   return (
@@ -520,7 +548,7 @@ function GuessResult({ p, count, gaveUp, vs }: { p: Prepared; count: number; gav
         <div className="flex items-center gap-3">
           <Img src={entryIcon(t)} name={entryName(t)} className="h-16 w-16 rounded-lg border border-line" />
           <div>
-            <div className="text-sm text-muted">{gaveUp ? 'คำตอบคือ' : `ถูกต้อง! ใช้ ${count} ครั้ง`}</div>
+            <div className="text-sm text-muted">{gaveUp ? 'คำตอบคือ' : `ถูกต้อง! ${count} ครั้ง${hints ? ` (รวม Hint ${hints})` : ''}`}</div>
             <div className="text-xl font-bold">{entryName(t)}</div>
             <div className="text-sm text-gold">{t.kind === 'item' ? `อยู่ใน ${t.sets.length} Set` : `Set ${t.set.id}`}</div>
           </div>
@@ -528,7 +556,7 @@ function GuessResult({ p, count, gaveUp, vs }: { p: Prepared; count: number; gav
       </Card>
       {vs && !gaveUp && <VersusCard you={count} them={vs.score} nick={vs.nick} lowerIsBetter unit=" ครั้ง" />}
       {p.daily ? (
-        <CopyTextButton label="คัดลอกผลไปแชร์" text={dailyGuessShare(p.daily, count, gaveUp)} />
+        <CopyTextButton label="คัดลอกผลไปแชร์" text={dailyGuessShare(p.daily, count, gaveUp, hints)} />
       ) : (
         !gaveUp && (
           <ChallengeShare challenge={{ kind: 'guess', dataVersion: p.version, mode: p.kind, setIds: p.setIds, seed: p.seed, score: count }} />

@@ -23,5 +23,6 @@ describe('share text', () => {
   test('daily guess', () => {
     expect(dailyGuessShare('2026-11-12', 4, false)).toBe('TFT Trivia ทาย Champion 12 พ.ย. · 4 ครั้ง')
     expect(dailyGuessShare('2026-11-12', 9, true)).toContain('ยอมแพ้')
+    expect(dailyGuessShare('2026-11-12', 6, false, 2)).toBe('TFT Trivia ทาย Champion 12 พ.ย. · 6 ครั้ง (Hint 2)')
   })
 })

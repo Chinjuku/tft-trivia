@@ -52,8 +52,10 @@ export interface DailyQuizResult {
   score: number
 }
 export interface DailyGuessResult {
+  /** guesses including hint cost */
   guesses: number
   gaveUp: boolean
+  hints?: number
 }
 
 export const getDailyQuiz = (date: string) => readStore<DailyQuizResult | null>(`daily:${date}:quiz`, null)

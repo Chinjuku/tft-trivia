@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { matchesAnswer, normalizeAnswer } from '../../engine/answer'
 import type { Question, QuizMode } from '../../engine/quiz'
 import { QUESTION_TIME_MS, questionScore } from '../../engine/score'
+import { QUIZ_HINT_FACTOR, quizHint, type QuizHint } from '../../engine/hints'
 import { Button } from '../../ui/kit'
 import { Prompt } from './Prompt'
 import { questionText } from './questionText'
@@ -13,6 +14,8 @@ export interface AnswerRecord {
   points: number
   /** player pressed "give up" on this question */
   skipped?: boolean
+  /** a hint was used (points halved) */
+  hinted?: boolean
 }
 
 /** Typed-answer suggestions: names of every subject of that mode in the chosen sets (never hints which one is right). */
@@ -36,11 +39,13 @@ export function QuizRunner({
   header,
   onDone,
   nameOptions = {},
+  seed = '',
 }: {
   questions: Question[]
   header: string
   onDone: (answers: AnswerRecord[]) => void
   nameOptions?: NameOptions
+  seed?: string
 }) {
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<AnswerRecord[]>([])
@@ -52,6 +57,7 @@ export function QuizRunner({
   const inputRef = useRef<HTMLInputElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [hi, setHi] = useState(-1)
+  const [hint, setHint] = useState<QuizHint | null>(null)
 
   const q = questions[index]
   const suggestions = useMemo(
@@ -67,11 +73,19 @@ export function QuizRunner({
       if (revealed) return
       const ms = performance.now() - startedAt
       const correct = !skipped && given != null && (q.style === 'choice' ? given === q.answer : matchesAnswer(given, q.answer))
-      const rec: AnswerRecord = { given, correct, ms, points: questionScore(correct, ms), ...(skipped ? { skipped } : {}) }
+      const base = questionScore(correct, ms)
+      const rec: AnswerRecord = {
+        given,
+        correct,
+        ms,
+        points: hint ? Math.floor(base * QUIZ_HINT_FACTOR) : base,
+        ...(skipped ? { skipped } : {}),
+        ...(hint ? { hinted: true } : {}),
+      }
       setRevealed(rec)
       setAnswers((a) => [...a, rec])
     },
-    [q, revealed, startedAt],
+    [q, revealed, startedAt, hint],
   )
 
   // timer: (re)start the clock for each question
@@ -104,6 +118,7 @@ export function QuizRunner({
     setRevealed(null)
     setTyped('')
     setHi(-1)
+    setHint(null)
   }
 
   if (!q) return null
@@ -132,7 +147,10 @@ export function QuizRunner({
           {q.choices!.map((c, i) => {
             const isAnswer = c === q.answer
             const isGiven = revealed?.given === c
-            const tone = !revealed
+            const removed = !revealed && hint?.type === 'fifty' && hint.remove.includes(c)
+            const tone = removed
+              ? 'border-line bg-card opacity-25 line-through'
+              : !revealed
               ? 'border-line bg-card hover:border-gold'
               : isAnswer
                 ? 'border-ok bg-ok/40'
@@ -143,7 +161,7 @@ export function QuizRunner({
               <button
                 key={c}
                 type="button"
-                disabled={!!revealed}
+                disabled={!!revealed || removed}
                 onClick={() => submit(c)}
                 className={`rounded-lg border px-3 py-3 text-left text-sm transition ${tone}`}
               >
@@ -213,8 +231,19 @@ export function QuizRunner({
         </form>
       )}
 
+      {!revealed && hint?.type === 'letters' && (
+        <div className="rounded-lg border border-gold/30 bg-gold-dim px-3 py-2 text-center font-mono text-lg tracking-wider text-gold">{hint.mask}</div>
+      )}
       {!revealed && (
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            disabled={!!hint}
+            onClick={() => setHint(quizHint(q, seed))}
+            className="rounded-md border border-gold/60 px-2.5 py-1 text-xs text-gold hover:bg-gold-dim disabled:opacity-40"
+          >
+            💡 {hint ? 'ใช้ Hint แล้ว' : q.style === 'choice' ? 'Hint: ตัด 2 ตัวเลือก' : 'Hint: ตัวแรก + จำนวนตัวอักษร'} · คะแนนครึ่งเดียว
+          </button>
           <button type="button" className="text-xs text-muted underline hover:text-text" onClick={() => submit(null, true)}>
             ยอมแพ้ข้อนี้
           </button>
@@ -225,7 +254,10 @@ export function QuizRunner({
         <div className="flex items-center justify-between gap-3 rounded-lg border border-line bg-card px-4 py-3">
           <div className="text-sm">
             {revealed.correct ? (
-              <span className="text-ok brightness-150">ถูกต้อง! +{revealed.points}</span>
+              <span className="text-ok brightness-150">
+                ถูกต้อง! +{revealed.points}
+                {revealed.hinted && <span className="text-muted"> (ใช้ Hint)</span>}
+              </span>
             ) : (
               <span>
                 <span className="text-no brightness-150">{revealed.skipped ? 'ยอมแพ้' : revealed.given == null ? 'หมดเวลา' : 'ผิด'}</span>

@@ -27,6 +27,7 @@ export function dailyQuizShare(isoDate: string, results: boolean[], score: numbe
 }
 
 /** Text to paste after the daily champion guess. */
-export function dailyGuessShare(isoDate: string, guesses: number, gaveUp: boolean): string {
-  return `TFT Trivia ทาย Champion ${thaiShortDate(isoDate)} · ${gaveUp ? 'ยอมแพ้' : `${guesses} ครั้ง`}`
+export function dailyGuessShare(isoDate: string, guesses: number, gaveUp: boolean, hints = 0): string {
+  const used = hints ? ` (Hint ${hints})` : ''
+  return `TFT Trivia ทาย Champion ${thaiShortDate(isoDate)} · ${gaveUp ? 'ยอมแพ้' : `${guesses} ครั้ง${used}`}`
 }
