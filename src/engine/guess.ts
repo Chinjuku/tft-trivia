@@ -63,25 +63,20 @@ export function allEntries(kind: GuessKind, sets: SetData[]): Entry[] {
   return out
 }
 
-/** Champions may only be targets once their tags were reviewed and every column has a value. */
+/**
+ * A champion can be the answer when every column has a value. Cost, traits, range and role come from that
+ * set's own data (Set 16 Ahri and Set 18 Ahri are different entries); gender/species/region come from the tag
+ * file, drafted or reviewed — reviewing only improves accuracy, it does not gate play.
+ */
 export function isEligibleTarget(e: Entry, identities: Identities): boolean {
   if (e.kind !== 'champion') return true
   const id = identities[e.champion.identity]
-  return !!id?.reviewed && !!id.gender && !!id.species && !!id.region && !!e.champion.damageType && !!e.champion.role
+  return !!id?.gender && !!id.species && !!id.region && !!e.champion.damageType && !!e.champion.role
 }
 
 export function eligibleTargets(kind: GuessKind, sets: SetData[], identities: Identities): Entry[] {
   return allEntries(kind, sets).filter((e) => isEligibleTarget(e, identities))
 }
-
-/** Share of champion identities (across the given sets) that guess mode can use. */
-export function reviewedShare(sets: SetData[], identities: Identities): number {
-  const ids = new Set(sets.flatMap((s) => s.champions.map((c) => c.identity)))
-  if (!ids.size) return 0
-  return [...ids].filter((k) => identities[k]?.reviewed).length / ids.size
-}
-
-export const GUESS_UNLOCK_SHARE = 0.8
 
 export function pickTarget(kind: GuessKind, seed: string, sets: SetData[], identities: Identities): Entry | null {
   const pool = eligibleTargets(kind, sets, identities)

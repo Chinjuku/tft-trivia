@@ -103,7 +103,7 @@ function ReviewView({ rows, initial }: { rows: Row[]; initial: TagFile }) {
       <Card highlight>
         <b>ตรวจแท็กตัวละคร</b> <span className="text-xs text-muted">(เฉพาะตอน dev)</span>
         <p className="mt-1 text-sm text-muted">
-          ตรวจแล้ว {reviewedCount}/{rows.length} ({Math.round((reviewedCount / rows.length) * 100)}%) · ทาย Champion จะเปิดเมื่อถึง 80%
+          ตรวจแล้ว {reviewedCount}/{rows.length} ({Math.round((reviewedCount / rows.length) * 100)}%) · ยิ่งตรวจมาก คอลัมน์เพศ เผ่าพันธุ์ และภูมิภาคในโหมดทายยิ่งแม่น
         </p>
         <p className="mt-1 text-xs text-muted">
           กด Export แล้วเอาไฟล์ไปแทน <code>data-src/champion-tags.json</code> จากนั้นรัน <code>npm run data</code>

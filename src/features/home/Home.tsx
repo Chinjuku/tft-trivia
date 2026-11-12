@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { dailyVersion, loadIdentities, loadLatest, loadManifest, loadSets } from '../../data/loader'
+import { dailyVersion, loadLatest, loadManifest } from '../../data/loader'
 import type { ManifestSet } from '../../data/types'
-import { GUESS_UNLOCK_SHARE, reviewedShare, type GuessKind } from '../../engine/guess'
+import type { GuessKind } from '../../engine/guess'
 import { thaiDate } from '../../engine/link'
 import { ALL_MODES, CHOICE_COUNT } from '../../engine/quiz'
 import { thaiShortDate } from '../../engine/score'
@@ -15,16 +15,13 @@ import { guessPath, playPath, QUIZ_COUNT } from '../routes'
 interface HomeData {
   version: number
   sets: ManifestSet[]
-  championGuessOpen: boolean
 }
 
 async function loadHome(): Promise<HomeData> {
   const latest = await loadLatest()
   const v = latest.latest
-  const [manifest, identities] = await Promise.all([loadManifest(v), loadIdentities(v)])
-  const sets = manifest.sets.filter((s) => s.status === 'verified')
-  const all = await loadSets(v, sets.map((s) => s.id))
-  return { version: v, sets, championGuessOpen: reviewedShare(all, identities) >= GUESS_UNLOCK_SHARE }
+  const manifest = await loadManifest(v)
+  return { version: v, sets: manifest.sets.filter((s) => s.status === 'verified') }
 }
 
 export function Home() {
@@ -60,7 +57,7 @@ function HomeView({ data, today }: { data: HomeData; today: string }) {
   const dailyV = useAsync(() => dailyVersion(today), [today])
 
   const sortedSets = useMemo(() => [...data.sets].sort((a, b) => a.number - b.number), [data.sets])
-  const guessKinds: GuessKind[] = data.championGuessOpen ? ['champion', 'item', 'trait'] : ['item', 'trait']
+  const guessKinds: GuessKind[] = ['champion', 'item', 'trait']
 
   return (
     <div className="flex flex-col gap-5">
@@ -74,18 +71,16 @@ function HomeView({ data, today }: { data: HomeData; today: string }) {
           <b>Daily · {thaiShortDate(today)}</b>
           <span className="text-sm text-gold">ทุกคนได้ชุดเดียวกัน</span>
         </div>
-        <div className={`mt-3 grid gap-2 ${data.championGuessOpen ? 'sm:grid-cols-2' : ''}`}>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
           <Button
             onClick={() => navigate(playPath({ daily: true, version: dailyV.status === 'ready' ? dailyV.value : undefined }))}
             variant={dailyQuiz ? 'ghost' : 'primary'}
           >
             {dailyQuiz ? `Quiz วันนี้ ✓ ${dailyQuiz.results.filter(Boolean).length}/${dailyQuiz.results.length}` : `เล่น Daily Quiz · ${QUIZ_COUNT} ข้อ`}
           </Button>
-          {data.championGuessOpen && (
-            <Button onClick={() => navigate(guessPath({ daily: true }))} variant={dailyGuess ? 'ghost' : 'primary'}>
-              {dailyGuess ? `ทาย Champion ✓ ${dailyGuess.gaveUp ? 'ยอมแพ้' : `${dailyGuess.guesses} ครั้ง`}` : 'ทาย Champion ประจำวัน'}
-            </Button>
-          )}
+          <Button onClick={() => navigate(guessPath({ daily: true }))} variant={dailyGuess ? 'ghost' : 'primary'}>
+            {dailyGuess ? `ทาย Champion ✓ ${dailyGuess.gaveUp ? 'ยอมแพ้' : `${dailyGuess.guesses} ครั้ง`}` : 'ทาย Champion ประจำวัน'}
+          </Button>
         </div>
       </Card>
 
@@ -159,7 +154,6 @@ function HomeView({ data, today }: { data: HomeData; today: string }) {
             </Button>
           ))}
         </div>
-        {!data.championGuessOpen && <p className="mt-2 text-xs text-muted">ทาย Champion จะเปิดเมื่อตรวจข้อมูลตัวละครครบ 80%</p>}
       </Card>
     </div>
   )

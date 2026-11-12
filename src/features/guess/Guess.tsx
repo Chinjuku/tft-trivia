@@ -107,7 +107,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   const suggestions = useMemo(() => {
     const pool = p.entries.filter((e) => !guessedKeys.has(entryKey(e)) && (!setFilter || e.set.id === setFilter))
     if (setFilter && !query.trim()) return [...pool].sort((a, b) => entryName(a).localeCompare(entryName(b)))
-    return searchEntries(pool, query, setFilter ? 100 : 8)
+    return searchEntries(pool, query, setFilter ? 100 : 30)
   }, [p.entries, guessedKeys, query, setFilter])
   const showList = focused && suggestions.length > 0 && (!!query.trim() || !!setFilter)
   // per-set filter only makes sense where entries are per set (items are merged across sets)
@@ -144,7 +144,7 @@ function GuessView({ p, vs }: { p: Prepared; vs?: { nick: string; score: number 
   if (!p.target) {
     return (
       <Card>
-        <p>ยังไม่มีตัวที่ใช้เป็นคำตอบได้ใน Set ที่เลือก (ข้อมูลตัวละครยังตรวจไม่ครบ)</p>
+        <p>ยังไม่มีตัวที่ใช้เป็นคำตอบได้ใน Set ที่เลือก ลองเลือก Set อื่น</p>
         <Button className="mt-3" variant="ghost" onClick={() => navigate('/')}>
           หน้าแรก
         </Button>

@@ -8,7 +8,6 @@ import {
   isSolved,
   knownSoFar,
   pickTarget,
-  reviewedShare,
   searchEntries,
   type Cell,
   type Entry,
@@ -144,19 +143,18 @@ describe('trait compare', () => {
 })
 
 describe('targets', () => {
-  test('only reviewed, complete champions are eligible', () => {
+  test('champions with every column filled are eligible, reviewed or not; each set is its own entry', () => {
     const t = eligibleTargets('champion', [s1, s4], ids).map(entryKey)
-    expect(t).toEqual(['1:G1', '4:G4'])
+    expect(t).toEqual(['1:G1', '1:L1', '4:G4'])
+    const noRegion = { ...ids, lulu: { ...ids.lulu, region: undefined } }
+    expect(eligibleTargets('champion', [s1], noRegion).map(entryKey)).toEqual(['1:G1'])
     expect(eligibleTargets('item', [s1], ids)).toHaveLength(4)
   })
   test('pickTarget is deterministic and ignores set order', () => {
     const a = pickTarget('item', 'seed', [s1, s4], ids)
     const b = pickTarget('item', 'seed', [s4, s1], ids)
     expect(entryKey(a!)).toBe(entryKey(b!))
-    expect(pickTarget('champion', 'x', [s1], { lulu: ids.lulu })).toBeNull()
-  })
-  test('reviewedShare', () => {
-    expect(reviewedShare([s1], ids)).toBe(0.5)
+    expect(pickTarget('champion', 'x', [s1], {})).toBeNull()
   })
 })
 
