@@ -1,34 +1,34 @@
 # Data report
 
-Generated 2026-11-12T08:47:27.801Z
+Generated 2026-11-12T08:49:52.861Z
 
 | Set | Name | Patch | Champions | Traits | Items (comp/compl/emblem/other) | Champions with role | Status |
 |---|---|---|---|---|---|---|---|
-| 1 | Origins | 9.21 | 57 | 24 | 54 (9/45/0/0) | 57/57 | draft |
-| 2 | Rise of the Elements | 10.5 | 56 | 27 | 54 (9/45/0/0) | 56/56 | draft |
-| 3 | Galaxies | 10.11 | 52 | 23 | 54 (9/45/0/0) | 52/52 | draft |
-| 3.5 | Return to the Stars | 10.18 | 57 | 24 | 54 (9/45/0/0) | 57/57 | draft |
-| 4 | Fates | 10.25 | 58 | 26 | 53 (9/44/0/0) | 58/58 | draft |
-| 4.5 | Festival of Beasts | 11.8 | 58 | 27 | 53 (9/44/0/0) | 58/58 | draft |
-| 5 | Reckoning | 11.14 | 59 | 27 | 62 (9/37/16/0) | 58/59 | draft |
-| 5.5 | Dawn of Heroes | 11.21 | 57 | 26 | 106 (9/37/24/36) | 57/57 | draft |
-| 6 | Gizmos & Gadgets | 12.2 | 59 | 28 | 65 (9/37/19/0) | 59/59 | draft |
-| 6.5 | Neon Nights | 12.10 | 60 | 28 | 68 (9/37/22/0) | 59/60 | draft |
-| 7 | Dragonlands | 12.17 | 58 | 28 | 71 (9/37/25/0) | 53/58 | draft |
-| 7.5 | Uprising | 12.22 | 62 | 29 | 71 (9/37/25/0) | 52/62 | draft |
-| 8 | Monsters Attack! | 13.5 | 59 | 27 | 69 (9/37/22/1) | 59/59 | draft |
-| 8.5 | Glitched Out!! | 13.11 | 59 | 28 | 116 (9/37/23/47) | 58/59 | draft |
-| 9 | Runeterra Reforged | 13.18 | 59 | 29 | 119 (9/37/21/52) | 59/59 | draft |
-| 9.5 | Horizonbound | 13.22 | 59 | 28 | 122 (9/37/24/52) | 59/59 | draft |
-| 10 | Remix Rumble | 14.5 | 59 | 29 | 122 (9/37/23/53) | 59/59 | draft |
-| 11 | Inkborn Fables | 14.13 | 61 | 27 | 142 (9/37/21/75) | 60/61 | draft |
-| 12 | Magic n' Mayhem | 14.22 | 60 | 27 | 150 (10/39/23/78) | 60/60 | draft |
-| 13 | Into the Arcane | 15.5 | 60 | 26 | 143 (10/39/21/73) | 60/60 | draft |
-| 14 | Cyber City | 15.12 | 60 | 25 | 156 (10/39/17/90) | 60/60 | draft |
-| 15 | K.O. Coliseum | 15.20 | 64 | 26 | 152 (10/39/18/85) | 64/64 | draft |
-| 16 | Set 16 | 16.12 | 100 | 48 | 165 (10/39/22/94) | 100/100 | draft |
-| 17 | Set 17 | 16.22 | 63 | 36 | 182 (10/39/20/113) | 63/63 | draft |
-| 18 | Set 18 | 16.22 | 65 | 35 | 172 (10/39/21/102) | 55/65 | draft |
+| 1 | Origins | 9.21 | 57 | 24 | 54 (9/45/0/0) | 57/57 | verified |
+| 2 | Rise of the Elements | 10.5 | 56 | 27 | 54 (9/45/0/0) | 56/56 | verified |
+| 3 | Galaxies | 10.11 | 52 | 23 | 54 (9/45/0/0) | 52/52 | verified |
+| 3.5 | Return to the Stars | 10.18 | 57 | 24 | 54 (9/45/0/0) | 57/57 | verified |
+| 4 | Fates | 10.25 | 58 | 26 | 53 (9/44/0/0) | 58/58 | verified |
+| 4.5 | Festival of Beasts | 11.8 | 58 | 27 | 53 (9/44/0/0) | 58/58 | verified |
+| 5 | Reckoning | 11.14 | 59 | 27 | 62 (9/37/16/0) | 58/59 | verified |
+| 5.5 | Dawn of Heroes | 11.21 | 57 | 26 | 106 (9/37/24/36) | 57/57 | verified |
+| 6 | Gizmos & Gadgets | 12.2 | 59 | 28 | 65 (9/37/19/0) | 59/59 | verified |
+| 6.5 | Neon Nights | 12.10 | 60 | 28 | 68 (9/37/22/0) | 59/60 | verified |
+| 7 | Dragonlands | 12.17 | 58 | 28 | 71 (9/37/25/0) | 53/58 | verified |
+| 7.5 | Uprising | 12.22 | 62 | 29 | 71 (9/37/25/0) | 52/62 | verified |
+| 8 | Monsters Attack! | 13.5 | 59 | 27 | 69 (9/37/22/1) | 59/59 | verified |
+| 8.5 | Glitched Out!! | 13.11 | 59 | 28 | 116 (9/37/23/47) | 58/59 | verified |
+| 9 | Runeterra Reforged | 13.18 | 59 | 29 | 119 (9/37/21/52) | 59/59 | verified |
+| 9.5 | Horizonbound | 13.22 | 59 | 28 | 122 (9/37/24/52) | 59/59 | verified |
+| 10 | Remix Rumble | 14.5 | 59 | 29 | 122 (9/37/23/53) | 59/59 | verified |
+| 11 | Inkborn Fables | 14.13 | 61 | 27 | 142 (9/37/21/75) | 60/61 | verified |
+| 12 | Magic n' Mayhem | 14.22 | 60 | 27 | 150 (10/39/23/78) | 60/60 | verified |
+| 13 | Into the Arcane | 15.5 | 60 | 26 | 143 (10/39/21/73) | 60/60 | verified |
+| 14 | Cyber City | 15.12 | 60 | 25 | 156 (10/39/17/90) | 60/60 | verified |
+| 15 | K.O. Coliseum | 15.20 | 64 | 26 | 152 (10/39/18/85) | 64/64 | verified |
+| 16 | Set 16 | 16.12 | 100 | 48 | 165 (10/39/22/94) | 100/100 | verified |
+| 17 | Set 17 | 16.22 | 63 | 36 | 182 (10/39/20/113) | 63/63 | verified |
+| 18 | Set 18 | 16.22 | 65 | 35 | 172 (10/39/21/102) | 55/65 | verified |
 
 ## Identities: 218
 

@@ -1,13 +1,13 @@
 {
  "dataVersion": 1,
- "contentHash": "288cce86a682e11b",
+ "contentHash": "46e4e074e93fade8",
  "sets": [
   {
    "id": "1",
    "number": 1,
    "name": "Origins",
    "patch": "9.21",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 57,
     "items": 54,
@@ -19,7 +19,7 @@
    "number": 2,
    "name": "Rise of the Elements",
    "patch": "10.5",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 56,
     "items": 54,
@@ -31,7 +31,7 @@
    "number": 3,
    "name": "Galaxies",
    "patch": "10.11",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 52,
     "items": 54,
@@ -43,7 +43,7 @@
    "number": 3.5,
    "name": "Return to the Stars",
    "patch": "10.18",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 57,
     "items": 54,
@@ -55,7 +55,7 @@
    "number": 4,
    "name": "Fates",
    "patch": "10.25",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 58,
     "items": 53,
@@ -67,7 +67,7 @@
    "number": 4.5,
    "name": "Festival of Beasts",
    "patch": "11.8",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 58,
     "items": 53,
@@ -79,7 +79,7 @@
    "number": 5,
    "name": "Reckoning",
    "patch": "11.14",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 62,
@@ -91,7 +91,7 @@
    "number": 5.5,
    "name": "Dawn of Heroes",
    "patch": "11.21",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 57,
     "items": 106,
@@ -103,7 +103,7 @@
    "number": 6,
    "name": "Gizmos & Gadgets",
    "patch": "12.2",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 65,
@@ -115,7 +115,7 @@
    "number": 6.5,
    "name": "Neon Nights",
    "patch": "12.10",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 60,
     "items": 68,
@@ -127,7 +127,7 @@
    "number": 7,
    "name": "Dragonlands",
    "patch": "12.17",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 58,
     "items": 71,
@@ -139,7 +139,7 @@
    "number": 7.5,
    "name": "Uprising",
    "patch": "12.22",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 62,
     "items": 71,
@@ -151,7 +151,7 @@
    "number": 8,
    "name": "Monsters Attack!",
    "patch": "13.5",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 69,
@@ -163,7 +163,7 @@
    "number": 8.5,
    "name": "Glitched Out!!",
    "patch": "13.11",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 116,
@@ -175,7 +175,7 @@
    "number": 9,
    "name": "Runeterra Reforged",
    "patch": "13.18",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 119,
@@ -187,7 +187,7 @@
    "number": 9.5,
    "name": "Horizonbound",
    "patch": "13.22",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 122,
@@ -199,7 +199,7 @@
    "number": 10,
    "name": "Remix Rumble",
    "patch": "14.5",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 59,
     "items": 122,
@@ -211,7 +211,7 @@
    "number": 11,
    "name": "Inkborn Fables",
    "patch": "14.13",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 61,
     "items": 142,
@@ -223,7 +223,7 @@
    "number": 12,
    "name": "Magic n' Mayhem",
    "patch": "14.22",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 60,
     "items": 150,
@@ -235,7 +235,7 @@
    "number": 13,
    "name": "Into the Arcane",
    "patch": "15.5",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 60,
     "items": 143,
@@ -247,7 +247,7 @@
    "number": 14,
    "name": "Cyber City",
    "patch": "15.12",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 60,
     "items": 156,
@@ -259,7 +259,7 @@
    "number": 15,
    "name": "K.O. Coliseum",
    "patch": "15.20",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 64,
     "items": 152,
@@ -271,7 +271,7 @@
    "number": 16,
    "name": "Set 16",
    "patch": "16.12",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 100,
     "items": 165,
@@ -283,7 +283,7 @@
    "number": 17,
    "name": "Set 17",
    "patch": "16.22",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 63,
     "items": 182,
@@ -295,7 +295,7 @@
    "number": 18,
    "name": "Set 18",
    "patch": "16.22",
-   "status": "draft",
+   "status": "verified",
    "counts": {
     "champions": 65,
     "items": 172,
